@@ -2,11 +2,11 @@ let fs = require("fs");
 // npm install cheerio
 // cheerio module require
 let cheerio = require("cheerio");
-let html = fs.readFileSync("../facts/index.html", "utf-8");
+let html = fs.readFileSync("../facts/index.html", "utf-8");   
 // console.log(html);
 let $ = cheerio.load(html);
 // to select  element from the page
-// let p = $("p");
+let p = $("p");
 // to get text
 // let pKaData = p.text();
 // console.log(pKaData);
@@ -25,7 +25,6 @@ let $ = cheerio.load(html);
 // select all the element with para class
 // let allelem = $(".para");
 // console.log(allelem.text());
-
 // select a element with both classes in it
 // let combinedElem = $(".para.first-para");
 // console.log(combinedElem.text());

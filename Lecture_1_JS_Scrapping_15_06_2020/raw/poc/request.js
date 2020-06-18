@@ -3,6 +3,7 @@
 let request = require("request");
 let fs = require("fs");
 let cheerio = require("cheerio");
+
 request("https://www.espncricinfo.com/series/_/id/8039/season/2015/icc-cricket-world-cup", dataReciever);
 function dataReciever(err, res, html) {
     if (err == null && res.statusCode == 200) {
@@ -26,6 +27,8 @@ function parsefile(html) {
     // console.log(fullLink);
     request(fullLink, matchPageHandler);
 }
+
+
 
 function matchPageHandler(err, res, html) {
     if (err == null && res.statusCode == 200) {
@@ -52,8 +55,8 @@ function parseMatch(html) {
         let allanchors = $(allCards[i]).find(".match-cta-container a")
         let scoreCardLink = $(allanchors[0]).attr("href");
         console.log("###############################");
-        // console.log(result);
-        // console.log(details);
+        console.log(result);
+        console.log(details);
         console.log("https://www.espncricinfo.com"+scoreCardLink);
         console.log("###############################");
     }

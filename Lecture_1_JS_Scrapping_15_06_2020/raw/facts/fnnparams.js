@@ -2,7 +2,7 @@
 // pass a variable as a parameter to a function
 // pass a function as a parameter to function
 function myfun(param) {
-    console.log(param);
+    // console.log(param);
     let rVal = param();
     console.log(rVal);
 }
