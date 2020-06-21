@@ -15,6 +15,7 @@ function dataReciever(err, res, html) {
         // console.log(html);
         count--;
         parseHtml(html);
+
         if (count == 0) {
             // runs => sort 
             // array.sort

@@ -5,6 +5,7 @@ console.log("Before");
 // intiate the task 
 // task => readfile
 // 
+
 fs.readFile("E:\\file1.mp4", function (err, content) {
     if(err){
         console.log("some error occurred")
@@ -15,6 +16,5 @@ fs.readFile("E:\\file1.mp4", function (err, content) {
     }
 });
 console.log("After");
-
 while(true);
 

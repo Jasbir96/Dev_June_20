@@ -1,0 +1,27 @@
+{
+  "name": "Dev_June_20",
+  "version": "1.0.0",
+  "description": "All your class code as well as assignments will be added here.\r  **Star this repo to get regular updates** \r * References: https://github.com/Pep-DEV101/DEV_June_20/blob/master/reference.md",
+  "main": "index.js",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "chromedriver": "^83.0.0",
+    "request": "^2.88.2",
+    "selenium-webdriver": "^4.0.0-alpha.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pep-DEV101/Dev_June_20.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pep-DEV101/Dev_June_20/issues"
+  },
+  "homepage": "https://github.com/Pep-DEV101/Dev_June_20#readme"
+}
