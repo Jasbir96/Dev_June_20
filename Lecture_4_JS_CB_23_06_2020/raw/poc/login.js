@@ -103,7 +103,7 @@ function questionSubmitter(qlink) {
             return handleLockP;
         }).then(function () {
             // code find
-            
+        
             // copy 
             // code paste
         })
@@ -121,6 +121,7 @@ function handleLockBtn() {
     return new Promise(function (resolve, reject) {
         let lockBtnP = driver.findElement(swd.By.css("button.ui-btn.ui-btn-normal.ui-btn-primary .ui-content.align-icon-right"));
         lockBtnP.then(function (lockBtn) {
+            
             let actions = driver.actions({ async: true });
             let elemPressedP = actions.move({ origin: lockBtn }).click().perform();
             // Performs release event on target element
