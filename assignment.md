@@ -11,3 +11,5 @@
 * College Notice Board Scrapper
 #### Todo
 * Finish automation activity upto single question
+### 23-06-2020
+* paste and run code on hk

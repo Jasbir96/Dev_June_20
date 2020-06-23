@@ -8,7 +8,7 @@ let bldr = new swd.Builder();
 let driver = bldr.forBrowser("chrome").build();
 // pending 
 let GWillBeOpendP = driver.get("https://www.hackerrank.com/auth/login?h_l=body_middle_left_button&h_r=login");
-
+let gCodeArr;
 // GWillBeOpendP.then(function () {
 //     // console.log("Home page opened");
 //     let emailPromise = driver.findElement(swd.By.css("#input-1"));
@@ -103,15 +103,17 @@ function questionSubmitter(qlink) {
             return handleLockP;
         }).then(function () {
             // code find
-        
+            let codep = getCode();
+            return codep;
             // copy 
             // code paste
+        }).then(function (code) {
+            console.log(code);
         })
             .then(function () {
                 console.log("Reached editorial page");
                 resolve();
             }).catch(function (err) {
-
                 reject(err);
             })
     });
@@ -121,7 +123,7 @@ function handleLockBtn() {
     return new Promise(function (resolve, reject) {
         let lockBtnP = driver.findElement(swd.By.css("button.ui-btn.ui-btn-normal.ui-btn-primary .ui-content.align-icon-right"));
         lockBtnP.then(function (lockBtn) {
-            
+
             let actions = driver.actions({ async: true });
             let elemPressedP = actions.move({ origin: lockBtn }).click().perform();
             // Performs release event on target element
@@ -135,4 +137,37 @@ function handleLockBtn() {
         })
     })
     // move on
+}
+function getCode() {
+    return new Promise(function (resolve, reject) {
+        let h3P = driver.findElements(swd.By.css(".hackdown-content h3"));
+        let highlightsP = driver.findElements(swd.By.css(".hackdown-content .highlight"));
+        let bArrP = Promise.all([h3P, highlightsP]);
+        bArrP
+            .then(
+                function (bArr) {
+                    let h3Arr = bArr[0];
+                    let highlightsCodeArr = bArr[1];
+                    gCodeArr = highlightsCodeArr;
+                    let tPArr = [];
+
+                    for (let i = 0; i < h3Arr.length; i++) {
+                        let textP = h3Arr[i].getText();
+                        tPArr.push(textP);
+                    }
+                    let alltEextPArr = Promise.all(tPArr);
+                    return alltEextPArr
+                }).then(
+                    function (allLangArr) {
+                        console.log(allLangArr);
+                        let index = allLangArr.indexOf("C++");
+                        let codePromise = gCodeArr[index].getText();
+                        return codePromise;
+                        // filter out -> C++
+                    }).then(function (code) {
+                        resolve(code);
+                    }).catch(function (err) {
+                        reject(err);
+                    })
+    })
 }
