@@ -5,3 +5,9 @@
 ### 18-06-2020
 * create leaderboard of only from batsmens  of  winning team
 * Input: https://www.espncricinfo.com/series/_/id/8039/season/2015/icc-cricket-world-cup 
+### 21-06-2020
+#### Optional
+* Directory Organizer
+* College Notice Board Scrapper
+#### Todo
+* Finish automation activity upto single question
