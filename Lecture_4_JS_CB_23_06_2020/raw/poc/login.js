@@ -26,26 +26,26 @@ GWillBeOpendP.then(function () {
     let addImpWaitP = driver.manage().setTimeouts({ implicit: 10000 });
     return addImpWaitP;
 }).then(function () {
-        // console.log("Home page opened");
-        let emailPromise = driver.findElement(swd.By.css("#input-1"));
-        let passwordPromise = driver.findElement(swd.By.css("#input-2"));
-        // parallely run promises
-        let bothElemP = Promise.all([emailPromise, passwordPromise]);
-        return bothElemP;
-    }).then(function (beArr) {
-        let EWillBeEP = beArr[0].sendKeys(email);
-        let passwordEnteredP = beArr[1].sendKeys(pwd);
-        let bothKeysWillBeEnteredP = Promise.all([EWillBeEP, passwordEnteredP]);
-        return bothKeysWillBeEnteredP;
-    }).then(function () {
-        // email and pass entered
-        // create a user defined promise based fn
-        let loginWillClickedP = navigatorfn("button.auth-button");
-        return loginWillClickedP;
-    }).then(function () {
-        let ipBtnP = navigatorfn("#base-card-1-link");
-        return ipBtnP;
-    })
+    // console.log("Home page opened");
+    let emailPromise = driver.findElement(swd.By.css("#input-1"));
+    let passwordPromise = driver.findElement(swd.By.css("#input-2"));
+    // parallely run promises
+    let bothElemP = Promise.all([emailPromise, passwordPromise]);
+    return bothElemP;
+}).then(function (beArr) {
+    let EWillBeEP = beArr[0].sendKeys(email);
+    let passwordEnteredP = beArr[1].sendKeys(pwd);
+    let bothKeysWillBeEnteredP = Promise.all([EWillBeEP, passwordEnteredP]);
+    return bothKeysWillBeEnteredP;
+}).then(function () {
+    // email and pass entered
+    // create a user defined promise based fn
+    let loginWillClickedP = navigatorfn("button.auth-button");
+    return loginWillClickedP;
+}).then(function () {
+    let ipBtnP = navigatorfn("#base-card-1-link");
+    return ipBtnP;
+})
     .then(function () {
         let arrayBtnP = navigatorfn("a[data-attr1='warmup']");
         return arrayBtnP;
@@ -67,7 +67,16 @@ GWillBeOpendP.then(function () {
         return allHrefPArr;
     }).then(function (hrefArr) {
         let firstQWillBeSubmitP = questionSubmitter(hrefArr[0]);
+        for (let i = 1; i < hrefArr.length; i++) {
+            firstQWillBeSubmitP = firstQWillBeSubmitP.then(function () {
+                let qsp = questionSubmitter(hrefArr[i]);
+                return qsp;
+            })
+        }
+
         return firstQWillBeSubmitP;
+    }).then(function(){
+        console.log("All question submitted");
     })
     .catch(function (err) {
         console.log(err)
