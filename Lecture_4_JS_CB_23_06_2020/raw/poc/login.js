@@ -8,7 +8,7 @@ let bldr = new swd.Builder();
 let driver = bldr.forBrowser("chrome").build();
 // pending 
 let GWillBeOpendP = driver.get("https://www.hackerrank.com/auth/login?h_l=body_middle_left_button&h_r=login");
-let gCodeArr;
+let gCodeArr, gInputBox, gCodeBox;
 // GWillBeOpendP.then(function () {
 //     // console.log("Home page opened");
 //     let emailPromise = driver.findElement(swd.By.css("#input-1"));
@@ -25,8 +25,7 @@ let { email, pwd } = require("../../../credentials");
 GWillBeOpendP.then(function () {
     let addImpWaitP = driver.manage().setTimeouts({ implicit: 10000 });
     return addImpWaitP;
-})
-    .then(function () {
+}).then(function () {
         // console.log("Home page opened");
         let emailPromise = driver.findElement(swd.By.css("#input-1"));
         let passwordPromise = driver.findElement(swd.By.css("#input-2"));
@@ -108,24 +107,27 @@ function questionSubmitter(qlink) {
             // copy 
             // code paste
         }).then(function (code) {
-            console.log(code);
+            // console.log(code);
+            let codePasteP = pasteCode(code);
+            return codePasteP;
         })
             .then(function () {
-                console.log("Reached editorial page");
+                console.log("code copied");
                 resolve();
             }).catch(function (err) {
                 reject(err);
             })
     });
 }
+
 function handleLockBtn() {
     // exist => click
     return new Promise(function (resolve, reject) {
         let lockBtnP = driver.findElement(swd.By.css("button.ui-btn.ui-btn-normal.ui-btn-primary .ui-content.align-icon-right"));
         lockBtnP.then(function (lockBtn) {
-
             let actions = driver.actions({ async: true });
             let elemPressedP = actions.move({ origin: lockBtn }).click().perform();
+
             // Performs release event on target element
             return elemPressedP
         }).then(function () {
@@ -169,5 +171,57 @@ function getCode() {
                     }).catch(function (err) {
                         reject(err);
                     })
+    })
+}
+
+function pasteCode(code) {
+    return new Promise(function (resolve, reject) {
+        // click on problem tab
+        let goToProblemTabP = navigatorfn('a[data-attr2="Problem"]');
+        goToProblemTabP.then(function () {
+            let inputWillBeClickedP = navigatorfn(".custom-input-checkbox");
+            return inputWillBeClickedP;
+        }).then(function () {
+            let inputBoxP = driver.findElement(swd.By.css(".custominput"));
+            return inputBoxP;
+        }).then(function (inputBox) {
+            gInputBox = inputBox;
+            let codewillBeSendP = inputBox.sendKeys(code);
+            return codewillBeSendP;
+        }).then(function () {
+            // ctrl  A
+            let ctrlAWillBePressedP =
+                gInputBox.sendKeys(swd.Key.CONTROL + "a");
+            return ctrlAWillBePressedP;
+        }).then(function () {
+            // ctrlx
+            let ctrlXWillBePressedP =
+                gInputBox.sendKeys(swd.Key.CONTROL + "x");
+            return ctrlXWillBePressedP;
+        }).then(function () {
+            let codeBoxP =
+                driver.findElement(swd.By.css(".inputarea"));
+            return codeBoxP
+        }).then(function (codeBox) {
+            gCodeBox = codeBox;
+            let ctrlAp = codeBox.sendKeys(swd.Key.CONTROL + "a");
+            return ctrlAp;
+        }).then(function () {
+            let ctrlVP = gCodeBox.sendKeys(swd.Key.CONTROL + "v");
+            return ctrlVP;
+        }).then(function () {
+            let codeWillBeSubmitedP = navigatorfn(".hr-monaco-submit");
+            return codeWillBeSubmitedP
+        })
+            // findelemenet=> textbox
+            .then(function () {
+                console.log("code copied to input box");
+                resolve();
+            }).catch(function (err) {
+                reject(err);
+            })
+        // click on inputBox
+        // sendkeys
+        // submit code 
     })
 }

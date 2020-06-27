@@ -6,9 +6,9 @@ function promisifyFS(path) {
         // logic
         fs.readFile(path, function (err, data) {
             if (err) {
-                reject(10)
+                reject(err)
             } else {
-                resolve("cjadbscj")
+                resolve(data)
             }
         });
         //reject call

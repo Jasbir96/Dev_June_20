@@ -1,5 +1,6 @@
 let fs = require("fs");
-fs.readFile("f1.txt", function (err, data) {
+fs.readFile("f1.txt", cb);
+function cb(err, data) {
     if (err) {
         console.log(err);
     } else {
@@ -7,4 +8,4 @@ fs.readFile("f1.txt", function (err, data) {
         console.log("Content : " + data);
 
     }
-})
+}
