@@ -25,6 +25,7 @@
   * https://flaviocopes.com/puppeteer/
 	* https://nitayneeman.com/posts/getting-to-know-puppeteer-using-practical-examples/
   * https://peter.sh/experiments/chromium-command-line-switches/
- ##### **Official**
+##### **Official**
   * https://pptr.dev
-  * https://github.com/puppeteer/puppeteer/blob/master/docs/api.md
+  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch#Examples
+  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then

@@ -62,7 +62,22 @@ async function handleSinglePage(tab, browser) {
         allQonONePArr.push(qWillSolvedP);
     }
     await Promise.all(allQonONePArr);
+    // Postorder
+    // decide => move forward
+    //  return
+    let allLis = await tab.$$(".pagination ul li");
+    let nxtBtn = allLis[allLis.length - 2];
+    let isDisabled = await tab.evaluate(function (elem) {
+        return elem.getAttribute("class");
+    }, nxtBtn);
+    if (isDisabled == "disabled") {
+        return;
+    } else {
+        await Promise.all([nxtBtn.click(), tab.waitForNavigation({ waitUntil: "networkidle0" })])
+        await handleSinglePage(tab, browser);
+    }
 }
+
 fn();
 function questionSolver(cLink, newTab) {
     return new Promise(function (resolve, reject) {

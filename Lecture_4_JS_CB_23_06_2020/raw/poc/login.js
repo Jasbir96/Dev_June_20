@@ -75,7 +75,7 @@ GWillBeOpendP.then(function () {
         }
 
         return firstQWillBeSubmitP;
-    }).then(function(){
+    }).then(function () {
         console.log("All question submitted");
     })
     .catch(function (err) {
@@ -136,14 +136,11 @@ function handleLockBtn() {
         lockBtnP.then(function (lockBtn) {
             let actions = driver.actions({ async: true });
             let elemPressedP = actions.move({ origin: lockBtn }).click().perform();
-
             // Performs release event on target element
             return elemPressedP
-        }).then(function () {
-            resolve();
-        }).catch(function (err) {
-
+        }, function () {
             console.log("Lock Btn not found");
+        }).then(function () {
             resolve();
         })
     })
