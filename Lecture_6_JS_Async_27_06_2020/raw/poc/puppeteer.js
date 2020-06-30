@@ -1,4 +1,5 @@
 // npm install puppeteer
+// puppeteer=> require
 let pp = require("puppeteer");
 async function fn() {
     // headless browser
