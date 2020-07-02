@@ -55,14 +55,17 @@ position: relative;
 min-width: 74px;
 }
 .left-col{
-
+position: absolute;
 }
 .left-col>.cell{
     width: 25px
 }
 .grid{
-
+    position: absolute;
+    left: 24px;
 }
+
+
 .row>.cell{
     min-width: 74px;
 }
