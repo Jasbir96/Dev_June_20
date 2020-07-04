@@ -77,7 +77,6 @@ async function handleSinglePage(tab, browser) {
         await handleSinglePage(tab, browser);
     }
 }
-
 fn();
 function questionSolver(cLink, newTab) {
     return new Promise(function (resolve, reject) {

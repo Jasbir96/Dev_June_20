@@ -7,6 +7,7 @@
     <title><%=title%></title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <!-- <h1><%=Heading%></h1> -->
     <!-- .menu-container+.menu-options+(.formula-container>input[type="text"]*2)+.content-container+.sheets -->
@@ -14,8 +15,8 @@
     <div class="menu-options">Menu-Options</div>
     <div class="formula-container">
         Formula
-        <input type="text" readonly="true" value="A1">
-        <input type="text"></div>
+        <input type="text" readonly="true" id="address-input">
+        <input type="text" id="fomula-input"></div>
     <div class="content-container">
         <div id="top-left-cell" class="top-left-cell"></div>
         <div id="top-row" class="top-row">
@@ -32,19 +33,20 @@
             </div>
             <%}%>
         </div>
-        <div id="grid" clas="grid">
+        <div id="grid" class="grid">
             <%for(let i=0;i<rows;i++){%>
             <div class="row">
                 <%for(let j=0;j<cols;j++){%>
-                <div class="cell" contenteditable="true">
-                    <%= i+"-"+j %>
+                <div class="cell" contenteditable="true"
+                 r-id=<%=i%> c-id=<%=j%>>
+
                 </div>
-                <%}%>
-        </div>
-        <%}%>
+                <%}%> </div>
+                    <%}%>
             </div>
         </div>
         <div class="sheets-container">Sheets</div>
+        <script src="script.js"></script>
 </body>
 
 </html>
