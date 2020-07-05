@@ -1,6 +1,5 @@
 // 
 const $ = require("jquery");
-const { get } = require("jquery");
 // document 
 $(document).ready(function () {
     // console.log("Jquery Loaded");
@@ -12,7 +11,6 @@ $(document).ready(function () {
             + (rowId + 1);
         $("#address-input").val(value);
     })
-
     // val=> val
     // formula=> val
     $("#grid .cell").on("blur", function () {
@@ -31,16 +29,20 @@ $(document).ready(function () {
         let { colId, rowId } = getrc(lsc);
         if (cellObj.formula) {
             // delete Formula
-            rmusnds(cellObj);
+            rmusnds(cellObj, lsc);
         }
         cellObj.formula = $(this).val();
         // add Formula
         setusnds(lsc, cellObj.formula);
-        updateCell(rowId, colId, nval, true);
+        // calculate your value from formula
+        // 4.
+        let nVal = evaluate(cellObj);
+
+        updateCell(rowId, colId, nVal);
         //
     })
     // set yourself to parents downstream set parent to your upstream
-    function setusnds(cellObject, formula) {
+    function setusnds(cellElement, formula) {
         // (A1 + B1)
         formula = formula.replace("(", "").replace(")", "");
         // "A1 + B1"
@@ -52,12 +54,15 @@ $(document).ready(function () {
                 let { r, c } = getParentRowCol(formulaComponent[i], charAt0);
                 let parentCell = db[r][c];
 
-                let { colId, rowId } = getrc(cellObject);
+                let { colId, rowId } = getrc(cellElement);
+                // 1. 
+                let cell = getcell(cellElement);
                 // add yourself to donwstream of your parent
                 parentCell.downstream.push({
                     colId: colId, rowId: rowId
                 });
-                cellObject.upstream.push({
+                // 2. 
+                cell.upstream.push({
                     colId: c,
                     rowId: r
                 })
@@ -66,9 +71,10 @@ $(document).ready(function () {
         }
     }
     // delete formula
-    function rmusnds(cellObject) {
-        cellObj.formula = "";
-        let { rowId, colId } = getcell(cellObject);
+    function rmusnds(cellObject, cellElem) {
+        // 3.
+        cellObject.formula = "";
+        let { rowId, colId } = getrc(cellElem);
         for (let i = 0; i < cellObject.upstream.length; i++) {
             let uso = cellObject.upstream[i];
             let fuso = db[uso.rowId][uso.colId];
@@ -97,8 +103,7 @@ $(document).ready(function () {
         let c = charAt0 - 65;
         return { r, c };
     }
-    function updateCell() {
-    }
+
     // get row and col from ui
     function getrc(elem) {
         let colId = Number($(elem).attr("c-id"));
