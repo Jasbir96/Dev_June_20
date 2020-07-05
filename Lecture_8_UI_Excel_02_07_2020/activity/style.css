@@ -14,7 +14,20 @@ html,body{
 .menu-options{
     height: 60px;
     border: 1px solid green;
+    display: flex;
+    justify-content: space-evenly;
+    width: 127px;
+    align-items: center;
 }
+
+
+
+
+
+
+
+
+
 .formula-container{
     height: 28px;
     border: 1px solid royalblue;

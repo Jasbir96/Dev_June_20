@@ -12,7 +12,11 @@
     <!-- <h1><%=Heading%></h1> -->
     <!-- .menu-container+.menu-options+(.formula-container>input[type="text"]*2)+.content-container+.sheets -->
     <div class="menu-container">Menu</div>
-    <div class="menu-options">Menu-Options</div>
+    <div class="menu-options">
+        <div id="New">New</div>
+        <div id="Open">Open</div>
+        <div id="Save">Save</div>
+    </div>
     <div class="formula-container">
         Formula
         <input type="text" readonly="true" id="address-input">
@@ -37,8 +41,7 @@
             <%for(let i=0;i<rows;i++){%>
             <div class="row">
                 <%for(let j=0;j<cols;j++){%>
-                <div class="cell" contenteditable="true"
-                 r-id=<%=i%> c-id=<%=j%>>
+                <div class="cell" contenteditable="true" r-id=<%=i%> c-id=<%=j%>>
 
                 </div>
                 <%}%> </div>
