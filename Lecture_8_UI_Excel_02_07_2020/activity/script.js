@@ -15,10 +15,23 @@ $(document).ready(function () {
     // formula=> val
     $("#grid .cell").on("blur", function () {
         let { colId, rowId } = getrc(this);
-        db[rowId][colId].value = $(this).text();
-        console.log(db);
+        let cellObject = getcell(this);
+        
+        if (cellObject.value == $(this).html()) {
+            lsc=this;
+            return
+        }
+
+        if (cellObject.formula) {
+            rmusnds(cellObject, this);
+        }
+
+        cellObject.value = $(this).text();
+        updateCell(rowId, colId, cellObject.value);
+        // console.log(db);
         lsc = this;
     })
+    
     // val=> formula convert
     //formula => new formula 
     $("#formula-input").on("blur", function () {
@@ -27,6 +40,7 @@ $(document).ready(function () {
             return
         }
         let { colId, rowId } = getrc(lsc);
+
         if (cellObj.formula) {
             // delete Formula
             rmusnds(cellObj, lsc);
@@ -34,13 +48,41 @@ $(document).ready(function () {
         cellObj.formula = $(this).val();
         // add Formula
         setusnds(lsc, cellObj.formula);
-        // calculate your value from formula
-        // 4.
+        // 4. calculate value from formula
         let nVal = evaluate(cellObj);
-
+        console.log(nVal);
+        // update your cell
         updateCell(rowId, colId, nVal);
         //
     })
+    function evaluate(cellObj) {
+        //     upstream => go to your upstream=> get there values
+        // ( A1 + A11 + A1 )= [ (,A1,+,A11,+,A1,)]=> [(,10,+,A11,+,10,)]=> ( 10 + A11 + 10 )
+        // ( 10 + 20 )
+        // Js => eval 
+        let formula = cellObj.formula;
+        console.log(formula);
+        for (let i = 0; i < cellObj.upstream.length; i++) {
+            let cuso = cellObj.upstream[i];
+            // rId,CId => A1
+            let colAddress = String.fromCharCode(cuso.colId + 65);
+            let cellAddress = colAddress + (cuso.rowId + 1);
+            let fusokiVal = db[cuso.rowId][cuso.colId].value;
+            let formulCompArr = formula.split(" ");
+            formulCompArr = formulCompArr.map(function (elem) {
+                if (elem == cellAddress) {
+                    return fusokiVal;
+                } else {
+                    return elem;
+                }
+            })
+            formula = formulCompArr.join(" ");
+        }
+
+        console.log(formula);
+        // infix evaluation
+        return eval(formula);
+    }
     // set yourself to parents downstream set parent to your upstream
     function setusnds(cellElement, formula) {
         // (A1 + B1)
@@ -92,6 +134,22 @@ $(document).ready(function () {
 
         }
         cellObject.upstream = [];
+
+    }
+    function updateCell(rowId, colId, nVal) {
+        let cellObject = db[rowId][colId];
+        cellObject.value = nVal;
+        // update ui 
+
+
+        $(`#grid .cell[r-id=${rowId}][c-id=${colId}]`).html(nVal);
+
+        for (let i = 0; i < cellObject.downstream.length; i++) {
+            let dsocordObj = cellObject.downstream[i];
+            let dso = db[dsocordObj.rowId][dsocordObj.colId];
+            let dsonVal = evaluate(dso);
+            updateCell(dsocordObj.rowId, dsocordObj.colId, dsonVal);
+        }
 
     }
     // [4,0]=>"40"
