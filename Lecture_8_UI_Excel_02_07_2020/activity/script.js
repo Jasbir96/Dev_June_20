@@ -27,7 +27,6 @@ $(document).ready(function () {
                     formula: "",
                     downstream: [],
                     upstream: []
-
                 }
                 $(AllCols[j]).html('');
                 row.push(cell);
