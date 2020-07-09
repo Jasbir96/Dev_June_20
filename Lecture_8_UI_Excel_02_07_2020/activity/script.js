@@ -7,12 +7,32 @@ $(document).ready(function () {
     // console.log("Jquery Loaded");
     let db;
     let lsc;
+    $(".menu").on("click", function () {
+        let Id = $(this).attr("id");
+        // File
+        $(".menu-options").removeClass("selected");
+        $(`#${Id}-menu-options`).addClass("selected");
+    })
+
+
     $("#grid .cell").on("click", function () {
         let { colId, rowId } = getrc(this);
         let value = String.fromCharCode(65 + colId)
             + (rowId + 1);
         $("#address-input").val(value);
         //    set cell formula 
+    })
+    $(".content-container").on("scroll", function () {
+        let scrollY = $(this).scrollTop();
+        let scrollX = $(this).scrollLeft();
+        // console.log(scrollY);
+        $("#top-row,#top-left-cell").css("top", scrollY + "px");
+        $("#top-left-cell,#left-col").css("left", scrollX + "px");
+    })
+    $("#grid .cell").on("keyup", function () {
+        let { rowId } = getrc(this);
+        let ht = $(this).height();
+        $($("#left-col .cell")[rowId]).height(ht);
     })
     $("#New").on("click", function () {
         db = [];
@@ -53,7 +73,6 @@ $(document).ready(function () {
         // write 
         // Input=> file
     })
-
     $("#Open").on("click", async function () {
         let sdb = await dialog.showOpenDialog();
         let fp = sdb.filePaths[0];
@@ -72,8 +91,6 @@ $(document).ready(function () {
             }
         }
     })
-
-
     // **************Formula stuff starts here******************
     // val=> val
     // formula=> val
@@ -236,6 +253,7 @@ $(document).ready(function () {
     }
 
     function init() {
+        $("#File").trigger("click");
         $("#New").trigger("click");
         // db = [];
         // let AllRows = $("#grid").find(".row");
