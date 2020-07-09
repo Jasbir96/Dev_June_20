@@ -7,21 +7,6 @@ $(document).ready(function () {
     // console.log("Jquery Loaded");
     let db;
     let lsc;
-    $(".menu").on("click", function () {
-        let Id = $(this).attr("id");
-        // File
-        $(".menu-options").removeClass("selected");
-        $(`#${Id}-menu-options`).addClass("selected");
-    })
-
-
-    $("#grid .cell").on("click", function () {
-        let { colId, rowId } = getrc(this);
-        let value = String.fromCharCode(65 + colId)
-            + (rowId + 1);
-        $("#address-input").val(value);
-        //    set cell formula 
-    })
     $(".content-container").on("scroll", function () {
         let scrollY = $(this).scrollTop();
         let scrollX = $(this).scrollLeft();
@@ -33,6 +18,57 @@ $(document).ready(function () {
         let { rowId } = getrc(this);
         let ht = $(this).height();
         $($("#left-col .cell")[rowId]).height(ht);
+
+    })
+    $(".menu").on("click", function () {
+        let Id = $(this).attr("id");
+        // File
+        $(".menu-options").removeClass("selected");
+        $(`#${Id}-menu-options`).addClass("selected");
+    })
+    let lcell;
+    $("#grid .cell").on("click", function () {
+        let { colId, rowId } = getrc(this);
+        let value = String.fromCharCode(65 + colId)
+            + (rowId + 1);
+        let cellObject = db[rowId][colId];
+        $("#address-input").val(value);
+        $("#formula-input").val(cellObject.formula);
+        //    set cell formula 
+        if (lcell && this != lcell) {
+            $(lcell).removeClass("selected");
+        }           
+          $(this).addClass("selected");    
+        if (cellObject.bold) {
+            $("#bold").addClass("isOn")
+        } else {
+            $("#bold").removeClass("isOn")
+        }
+        lcell = this;
+    })
+    $("#bold").on("click", function () {
+        $(this).toggleClass("isOn");
+        let isBold = $(this).hasClass("isOn");
+        $("#grid .cell.selected").css("font-weight", isBold ? "bolder" : "normal");
+        let cellElem = $("#grid .cell.selected");
+        let cellObject = getcell(cellElem);
+        cellObject.bold = isBold;
+    })
+
+    $("#font-family").on("change", function () {
+        let fontFamily = $(this).val();
+        $("#grid .cell.selected").css("font-family", fontFamily);
+        let cellElem = $("#grid .cell.selected");
+        let cellObject = getcell(cellElem);
+        cellObject.fontFamily = fontFamily
+    })
+
+    $("#bg-color").on("change", function () {
+        let bgColor = $(this).val();
+        let cellElem = $("#grid .cell.selected");
+        cellElem.css("background-color", bgColor);
+        let cellObject = getcell(cellElem);
+        cellObject.bgColor = bgColor
     })
     $("#New").on("click", function () {
         db = [];
@@ -46,9 +82,27 @@ $(document).ready(function () {
                     value: "",
                     formula: "",
                     downstream: [],
-                    upstream: []
+                    upstream: [],
+                    bold: false,
+                    underline: false,
+                    italic: false,
+                    fontFamily: "Arial",
+                    fontSize: 12,
+                    bgColor: "white",
+                    textColor: "black",
+                    halign: "left"
                 }
+
                 $(AllCols[j]).html('');
+                $(AllCols[j]).css("font-weight", cell.bold ? "bolder" : "normal");
+                $(AllCols[j]).css("font-style", cell.italic ? "italic" : "normal");
+                $(AllCols[j]).css("text-decoration", cell.underline ? "underline" : "none");
+                $(AllCols[j]).css("font-family", cell.fontFamily);
+                $(AllCols[j]).css("font-size", cell.fontSize);
+                $(AllCols[j]).css("color", cell.textColor);
+                $(AllCols[j]).css("background-color", cell.bgColor);
+                $(AllCols[j]).css("text-align", cell.halign);
+
                 row.push(cell);
             }
             db.push(row);
@@ -249,8 +303,10 @@ $(document).ready(function () {
     // Get cell from db
     function getcell(cellElem) {
         let { colId, rowId } = getrc(cellElem);
+        console.log(colId + " " + rowId);
         return db[rowId][colId];
     }
+
 
     function init() {
         $("#File").trigger("click");

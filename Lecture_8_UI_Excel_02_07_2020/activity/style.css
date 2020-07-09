@@ -35,6 +35,13 @@ html,body{
     height: 100%;
 
 }
+
+
+input[type="button"].isOn{
+    background-color: lightslategrey;
+}
+
+
 .formula-container{
     height: 28px;
     border: 1px solid royalblue;
