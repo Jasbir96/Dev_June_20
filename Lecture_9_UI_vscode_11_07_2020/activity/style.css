@@ -1,0 +1,53 @@
+*{
+    box-sizing: border-box;
+    border:1px solid;
+}
+body,html{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    height: 100vh;
+    color: white;
+    background-color: #353b48;
+    font-family: sans-serif;
+    border:none;
+}
+.top{
+height:13%;
+display:flex;
+align-items: center;
+}
+.btn,.new,.save{
+    border:none;
+}
+.new{
+
+}
+.save{
+    color:white;
+    background-color: #353b48;
+}
+.tabs-container{
+    width: 42rem;
+    height: 100%;
+}
+.file-explorer{
+
+}
+.main{
+    height: calc(100vh - 13%);
+    border: 1px solid;
+    display: flex;
+}
+.content{
+    height: 100%;
+    border: 1px solid;
+    width:41rem;
+}
+.textbox{
+height: 80%;
+}
+.terminal{
+height: 20%;
+}
