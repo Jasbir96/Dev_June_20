@@ -7,6 +7,7 @@ $(document).ready(function () {
     // console.log("Jquery Loaded");
     let db;
     let lsc;
+
     $(".content-container").on("scroll", function () {
         let scrollY = $(this).scrollTop();
         let scrollX = $(this).scrollLeft();
@@ -14,18 +15,21 @@ $(document).ready(function () {
         $("#top-row,#top-left-cell").css("top", scrollY + "px");
         $("#top-left-cell,#left-col").css("left", scrollX + "px");
     })
+
     $("#grid .cell").on("keyup", function () {
         let { rowId } = getrc(this);
         let ht = $(this).height();
         $($("#left-col .cell")[rowId]).height(ht);
 
     })
+
     $(".menu").on("click", function () {
         let Id = $(this).attr("id");
         // File
         $(".menu-options").removeClass("selected");
         $(`#${Id}-menu-options`).addClass("selected");
     })
+
     let lcell;
     $("#grid .cell").on("click", function () {
         let { colId, rowId } = getrc(this);
@@ -37,8 +41,8 @@ $(document).ready(function () {
         //    set cell formula 
         if (lcell && this != lcell) {
             $(lcell).removeClass("selected");
-        }           
-          $(this).addClass("selected");    
+        }
+        $(this).addClass("selected");
         if (cellObject.bold) {
             $("#bold").addClass("isOn")
         } else {
@@ -141,7 +145,16 @@ $(document).ready(function () {
             let AllCols = $(AllRows[i]).find(".cell");
             for (let j = 0; j < AllCols.length; j++) {
                 //    DB
-                $(`#grid .cell[r-id=${i}][c-id=${j}]`).html(db[i][j].value);
+                let cell = db[i][j];
+                $(AllCols[j]).html(cell.value);
+                $(AllCols[j]).css("font-weight", cell.bold ? "bolder" : "normal");
+                $(AllCols[j]).css("font-style", cell.italic ? "italic" : "normal");
+                $(AllCols[j]).css("text-decoration", cell.underline ? "underline" : "none");
+                $(AllCols[j]).css("font-family", cell.fontFamily);
+                $(AllCols[j]).css("font-size", cell.fontSize);
+                $(AllCols[j]).css("color", cell.textColor);
+                $(AllCols[j]).css("background-color", cell.bgColor);
+                $(AllCols[j]).css("text-align", cell.halign);
             }
         }
     })
