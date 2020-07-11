@@ -17,6 +17,7 @@ async function fn() {
     await tab.type("#input-2", pwd);
     // click=> login
     // await tab.click();
+    // Ye mai kra dunga
     await Promise.all([
         tab.waitForNavigation({ waitUntil: "networkidle0" }),
         tab.click("button.auth-button"),
