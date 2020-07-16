@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.24.1/phaser.js" crossorigin="true"></script>
+    <title>Document</title>
+    <style>
+        html,
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript">
+        // game config => configuration
+        const config = {
+            // gaming engine=> WebGl,Canvas
+            // WEBGL => Pure Gaming Engine
+            // Canvas=> draw anything in browser
+            type: Phaser.AUTO,
+            width: 800,
+            height: 600,
+            physics: {
+                default: "arcade",
+                arcade: {
+                    gravity: {
+                        y: 300
+                    }
+                }
+
+            }, scene: {
+                // assets that would used later in the game
+                preload: preload,
+                // initialize 
+                create: setup,
+                // update
+                update: update
+            }
+        }
+
+        let platform, player, cursor, stars;
+        function preload() {
+            this.load.image("sky", "assets/sky.png");
+            this.load.image("platform", "assets/platform.png");
+
+            this.load.spritesheet("hero", "assets/player.png", {
+                frameWidth: 32,
+                frameHeight: 48
+            });
+            this.load.image("star", "assets/star.png");
+        }
+        function setup() {
+            // to add background
+            this.add.image(400, 300, "sky");
+            // to make an asset static=> no effect of gravity
+            platform = this.physics.add.staticGroup();
+
+            platform.create(400, 550, "platform").setScale(2).refreshBody();
+            platform.create(600, 400, "platform");
+            platform.create(50, 250, "platform");
+            platform.create(750, 150, "platform");
+
+            player = this.physics.add.sprite(400, 100, "hero");
+            // to create cursor keys
+            // for animation
+            cursor = this.input.keyboard.createCursorKeys();
+            stars = this.physics.add.group({
+                key: "star",
+                repeat: 10,
+                setXY: { x: 50, y: 0, stepX: 70 }
+            })
+            this.physics.add.collider(player, platform);
+            this.physics.add.collider(player, stars,collectStar);
+            this.physics.add.collider(platform, stars);
+
+            stars.children.iterate(function (star) {
+                star.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8))
+            });
+            // *********************************Animation*****************************
+
+            this.anims.create({
+                key: "left",
+                frames: this.anims.generateFrameNumbers("hero", { start: 0, end: 3 }),
+                frameRate: 10,
+                repeat: +1
+            })
+            this.anims.create({
+                key: "right",
+                frames: this.anims.generateFrameNumbers("hero", { start: 5, end: 9 }),
+                frameRate: 10,
+                repeat: +1
+            })
+            this.anims.create({
+                key: "normal",
+                frames: this.anims.generateFrameNumbers("hero", { start: 4, end: 4 }),
+                frameRate: 10
+            })
+
+
+        }
+        function collectStar(player,star) {
+            star.disableBody(true, true);
+        }
+        function update() {
+            if (cursor.left.isDown) {
+                player.setVelocityX(-160);
+                player.anims.play("left", true);
+            } else if (cursor.right.isDown) {
+                player.setVelocityX(160);
+                player.anims.play("right", true);
+            } else {
+                player.setVelocityX(0);
+                player.anims.play("normal");
+            }
+            // Vertical Jump
+            if (cursor.up.isDown && player.body.touching.down) {
+                player.setVelocityY(-420);
+            }
+        }
+        new Phaser.Game(config);
+    </script>
+
+
+</body>
+
+</html>
