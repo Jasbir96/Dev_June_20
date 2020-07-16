@@ -63,9 +63,11 @@ async function createChallenge(challenge) {
         `#input_format-container ${cSelector}`,
         `#constraints-container ${cSelector}`,
         `#output_format-container ${cSelector}`, "#tags_tag"];
-    let allElemPArr = selectors.map(function (elselector) {
+    
+        let allElemPArr = selectors.map(function (elselector) {
         return driver.findElement(swd.By.css(elselector));
     })
+
     let allElements = await Promise.all(allElemPArr);
     await allElements[0].sendKeys(challenge["Challenge Name"]);
     await allElements[1].sendKeys(challenge["Description"]);
