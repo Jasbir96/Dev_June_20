@@ -43,7 +43,7 @@
             }
         }
 
-        let platform, player, cursor, stars;
+        let platform, player, cursor, stars, score = 0, scoreText, bombs;
         function preload() {
             this.load.image("sky", "assets/sky.png");
             this.load.image("platform", "assets/platform.png");
@@ -53,6 +53,8 @@
                 frameHeight: 48
             });
             this.load.image("star", "assets/star.png");
+            this.load.audioSprite("sfx", "assets/fx_mixdown.json", ["assets/fx_mixdown.mp3", "assets/fx_mixdown.ogg"]);
+            this.load.image("bomb", "assets/bomb.png");
         }
         function setup() {
             // to add background
@@ -63,20 +65,35 @@
             platform.create(400, 550, "platform").setScale(2).refreshBody();
             platform.create(600, 400, "platform");
             platform.create(50, 250, "platform");
-            platform.create(750, 150, "platform");
+            platform.create(650, 200, "platform");
 
             player = this.physics.add.sprite(400, 100, "hero");
             // to create cursor keys
             // for animation
+            bombs = this.physics.add.group({
+                key: "bomb",
+
+                setXY: { x: 400, y: 0 }
+            });
             cursor = this.input.keyboard.createCursorKeys();
             stars = this.physics.add.group({
                 key: "star",
                 repeat: 10,
                 setXY: { x: 50, y: 0, stepX: 70 }
             })
+            let game = this;
+
             this.physics.add.collider(player, platform);
-            this.physics.add.collider(player, stars,collectStar);
+            // let boundFn = collectStar.bind(this);
+            this.physics.add.collider(player, stars, collectStar, null, this);
             this.physics.add.collider(platform, stars);
+            this.physics.add.collider(platform,bombs);
+            // you can add text to phas
+            scoreText = this.add.text(16, 16, "score:0", {
+                fontSize: "32px",
+                fill: "white"
+            })
+            player.setCollideWorldBounds(true);
 
             stars.children.iterate(function (star) {
                 star.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8))
@@ -103,23 +120,36 @@
 
 
         }
-        function collectStar(player,star) {
+        function collectStar(player, star) {
             star.disableBody(true, true);
+            this.sound.playAudioSprite("sfx", "ping");
+            score += 10;
+            scoreText.setText("Score: " + score);
+            if (score % 100 == 0) {
+                stars.children.iterate(function (child) {
+                    child.enableBody(true, child.x, 0, true, true);
+                })
+            }
         }
         function update() {
             if (cursor.left.isDown) {
                 player.setVelocityX(-160);
                 player.anims.play("left", true);
+                this.sound.playAudioSprite("sfx", "numkey");
+
             } else if (cursor.right.isDown) {
                 player.setVelocityX(160);
                 player.anims.play("right", true);
+                this.sound.playAudioSprite("sfx", "numkey");
             } else {
                 player.setVelocityX(0);
                 player.anims.play("normal");
             }
             // Vertical Jump
             if (cursor.up.isDown && player.body.touching.down) {
-                player.setVelocityY(-420);
+                player.setVelocityY(-480);
+
+                this.sound.playAudioSprite("sfx", "numkey");
             }
         }
         new Phaser.Game(config);
