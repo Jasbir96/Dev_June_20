@@ -1,0 +1,152 @@
+<html>
+
+<head>
+    <title>Brick Smasher</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js">
+    </script>
+</head>
+
+<body>
+    <script>
+        var initialize = function () {
+            this.score = 0;
+            this.life = 3;
+        };
+        var hitBrick = function (ball, brick) {
+            this.sound.playAudioSprite('sfx', "numkey");
+            this.score += 10;
+            this.scoreText.setText("Score: " + this.score);
+            brick.disableBody(true, true);
+            if (this.bricks.countActive() == 0) {
+                this.resetLevel();
+            }
+        };
+
+        var hitPaddle = function (ball, paddle) {
+            var difference = 0;
+         
+            if (ball.x < paddle.x) {
+                difference = paddle.x - ball.x;
+                ball.setVelocityX(-10 * difference);
+            }
+            else if (ball.x > paddle.x) {
+                difference = ball.x - paddle.x;
+                ball.setVelocityX(10 * difference);
+            }
+            else
+                ball.setVelocityX(5 + Math.random() * 10);
+        };
+
+        var resetLevel = function () {
+            this.resetBall();
+            this.bricks.children.each(function (brick) {
+                brick.enableBody(false, 0, 0, true, true);
+            });
+        };
+
+        var resetBall = function () {
+            this.ball.setVelocity(0);
+            this.ball.setPosition(this.paddle.x, 500);
+            this.ball.setData('onPaddle', true);
+        };
+
+        // same name mandatory
+        var preload = function () {
+            this.load.atlas('assets', 'assets/breakout/breakout.png', 'assets/breakout/breakout.json');
+            this.load.audioSprite('sfx', 'assets/fx_mixdown.json', ['assets/fx_mixdown.ogg', 'assets/fx_mixdown.mp3']);
+
+            this.initialize = initialize;
+            this.hitBrick = hitBrick;
+            this.hitPaddle = hitPaddle;
+            this.resetLevel = resetLevel;
+            this.resetBall = resetBall;
+        };
+
+        var create = function () {
+
+            this.physics.world.setBoundsCollision(true, true, true, false);
+            this.bricks = this.physics.add.staticGroup({
+                key: 'assets', frame: ['red1', 'yellow1', 'purple1', 'silver1', 'blue1'],
+                frameQuantity: 10,
+                gridAlign: { width: 10, height: 6, cellWidth: 64, cellHeight: 32, x: 112, y: 100 }
+            });
+
+            this.paddle = this.physics.add.image(400, 550, 'assets', 'paddle1').setImmovable();
+            this.ball = this.physics.add.image(400, 500, 'assets', 'ball1').setCollideWorldBounds(true).setBounce(1);
+
+
+            this.ball.setData('onPaddle', true);
+
+            this.input.on('pointermove', function (pointer) {
+                this.paddle.x = Phaser.Math.Clamp(pointer.x, 52, 740);
+                // this.paddle.x = pointer.x;
+                if (this.ball.getData('onPaddle')) {
+                    this.ball.x = this.paddle.x;
+                }
+            }, this);
+
+            this.input.on('pointerup', function () {
+                if (this.gameOver) {
+                    //console.log("game over");
+                    if (this.scene.restart()) {
+                        console.log("scene restarted");
+                        this.life = 3;
+                        this.score = 0;
+                        this.gameOver = false;
+                    }
+                }
+
+                if (this.ball.getData('onPaddle')) {
+                    this.ball.setVelocity(-75, -300);
+                    this.ball.setData('onPaddle', false);
+                }
+            }, this);
+
+
+            this.scoreText = this.add.text(16, 16, "Score: 0", {
+                fontSize: "16px"
+            });
+            this.lifeText = this.add.text(700, 16, "Lives: 3", {
+                fontSize: "16px"
+            });
+            // collison capbiltiy bricks ball and paddle
+            this.physics.add.collider(this.ball, this.bricks, this.hitBrick, null, this);
+            this.physics.add.collider(this.ball, this.paddle, this.hitPaddle, null, this);
+            this.initialize();
+        };
+
+        var update = function () {
+
+            if (this.ball.y > 600) {
+                if (this.life > 0)
+                    this.life--;
+                this.lifeText.setText("Lives: " + this.life);
+                if (this.life == 0) {
+                    this.lifeText.setText("Game Over");
+                    this.gameOver = true;
+                }
+                this.sound.playAudioSprite('sfx', "meow");
+                this.resetBall();
+            }
+        };
+
+
+        var config = {
+            type: Phaser.AUTO,
+            width: 800,
+            height: 600,
+            physics: {
+                default: "arcade"
+            },
+            scene: {
+                preload: preload,
+                update: update,
+                create: create
+            },
+        };
+
+        new Phaser.Game(config);
+    </script>
+</body>
+
+</html>

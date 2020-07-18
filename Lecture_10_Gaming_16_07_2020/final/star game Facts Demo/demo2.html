@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>first Phaser Game</title>
+  <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+  <style type="text/css">
+    body {
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    var config = {
+      type: Phaser.AUTO,
+      width: 800,
+      height: 600,
+      physics: {
+        default: "arcade",
+        arcade: {
+          gravity: { y: 300 },
+          debug: false
+        }
+      },
+      scene: {
+        preload: preload,
+        create: create,
+        update: update
+      }
+    };
+    var game = new Phaser.Game(config);
+
+    function preload() {
+      this.load.image("sky", "assets/sky.png");
+      this.load.image("ground", "assets/platform.png");
+
+    }
+
+    function create() {
+      // this=>scene
+      this.add.image(400, 300, "sky");
+
+      // static means rigid or fixed -  doesnot move on collision 
+      platforms = this.physics.add.staticGroup();
+
+      // ground
+      platforms
+        .create(400, 568, "ground")
+        .setScale(2)
+      //.refreshBody();
+
+      //elevated
+      platforms.create(600, 400, "ground");
+      platforms.create(50, 250, "ground");
+      platforms.create(750, 220, "ground");
+    }
+
+    function update() {
+
+    }
+
+  </script>
+</body>
+
+</html>

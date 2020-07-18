@@ -1,0 +1,207 @@
+<html>
+  <head>
+    <title>
+      Space Shooters
+    </title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+  </head>
+  <body>
+    <script>
+      var config = {
+        type: Phaser.AUTO,
+        width: 800,
+        height: 600,
+        physics: {
+          default: "arcade",
+          arcade: {
+            gravity: { y: 0 },
+            debug: false
+          }
+        },
+        scene: {
+          preload: preload,
+          create: create,
+          update: update
+        }
+      };
+
+      var hero;
+      var cursors;
+      var enemies;
+      var explosion;
+      var missiles;
+      var bomb;
+      var timer = 0;
+      var heroAlive = true;
+      var gameOver;
+      var stateText;
+      var scoreText;
+      var score = 0;
+
+      var game = new Phaser.Game(config);
+
+      function preload() {
+        this.load.image("starfield", "assets/gameart/starfield.png");
+        this.load.image("hero", "assets/gameart/hero.png");
+        this.load.image("missile", "assets/gameart/missile.png");
+        this.load.image("bomb", "assets/gameart/bomb.png");
+
+        this.load.spritesheet("saucer", "assets/gameart/shipsheet.png", {
+          frameWidth: 56,
+          frameHeight: 32
+        });
+
+        this.load.spritesheet(
+          "explosion",
+          "assets/gameart/explosionsheet.png",
+          {
+            frameWidth: 56,
+            frameHeight: 56
+          }
+        );
+      }
+
+      function create() {
+        this.add.image(400, 300, "starfield");
+        
+        hero = this.physics.add.image(400, 550, "hero").setScale(0.5);
+        hero.setCollideWorldBounds(true);
+
+        enemies = this.physics.add.group();
+        missiles = this.physics.add.group();
+        bombs = this.physics.add.group();
+
+        enemies.createMultiple({
+          key: "saucer",
+          repeat: 10,
+          setXY: { x: 40, y: 40, stepX: 70 }
+        });
+        enemies.createMultiple({
+          key: "saucer",
+          repeat: 10,
+          setXY: { x: 40, y: 100, stepX: 70 }
+        });
+        enemies.createMultiple({
+          key: "saucer",
+          repeat: 10,
+          setXY: { x: 40, y: 160, stepX: 70 }
+        });
+        enemies.createMultiple({
+          key: "saucer",
+          repeat: 10,
+          setXY: { x: 40, y: 220, stepX: 70 }
+        });
+        enemies.children.iterate(function(child) {
+          child.setImmovable(true);
+
+      });
+
+      var enemyanimation = {
+          key: "alive",
+          frames: this.anims.generateFrameNumbers("saucer", {
+            start: 0,
+            end: 4
+          }),
+          frameRate: 10,
+          repeat: -1
+        };
+
+        var explodeanimation = {
+          key: "explode",
+          frames: this.anims.generateFrameNumbers("explosion", {
+            start: 0,
+            end: 4
+          }),
+          frameRate: 10
+        };
+
+        this.anims.create(enemyanimation);
+        var anim = this.anims.create(explodeanimation);
+
+        enemies.playAnimation("alive");
+
+        explosion = this.physics.add.sprite(hero.x, hero.y, "explosion");
+        bomb = this.physics.add
+          .image(enemies.x, enemies.y, "bomb")
+          .setScale(0.5);
+        explosion.disableBody(true, true);
+
+        cursors = this.input.keyboard.createCursorKeys();
+        spacebar = this.input.keyboard.addKey(
+          Phaser.Input.Keyboard.KeyCodes.SPACE
+        );
+
+
+        var bombTimer = this.time.addEvent({
+          delay: 2000,
+          callback: dropBomb,
+          callbackScope: this,
+          repeat: -1
+        });
+      }
+
+      function fireMissile() {
+        missiles.createMultiple({
+          key: "missile",
+          setXY: { x: hero.x, y: hero.y },
+          max: 5
+        });
+        missiles.children.iterate(function(child) {
+          child.setScale(0.5);
+          child.setVelocityY(-200);
+        });
+      }
+
+      function dropBomb() {
+        if (enemies.countActive() == 0) return;
+        const saucer = getRandomSaucer();
+        if (saucer !== undefined && saucer !== null) {
+          bombs.createMultiple({
+            key: "bomb",
+            setXY: { x: saucer.x, y: saucer.y + 16 },
+            max: 5
+          });
+          bombs.children.iterate(function(child) {
+            child.setVelocityY(200);
+          });
+        }
+      }
+
+      
+      function getRandomSaucer() {
+        const enemyCount = enemies.countActive();
+        let saucerIndex = Math.floor(Math.random() * enemyCount);
+        console.log(saucerIndex);
+        const saucer = enemies.getFirstNth(saucerIndex + 1, true, false);
+        return saucer;
+      }
+
+      function update() {
+        if (cursors.left.isDown) {
+          hero.setVelocityX(-200);
+        } else if (cursors.right.isDown) hero.setVelocityX(200);
+        else hero.setVelocityX(0);
+        if (cursors.up.isDown) {
+          hero.setVelocityY(-200);
+        } else if (cursors.down.isDown) hero.setVelocityY(200);
+        else hero.setVelocityY(0);
+
+       if (missiles.countActive() <= 5) {
+          if (heroAlive) {
+            if (Phaser.Input.Keyboard.JustDown(spacebar)) {
+              fireMissile();
+            }
+            }
+            }
+         
+        missiles.children.iterate(function(child) {
+          if (missiles.contains(child)) {
+            if (child.y < 0) {
+              child.destroy();
+            }
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
