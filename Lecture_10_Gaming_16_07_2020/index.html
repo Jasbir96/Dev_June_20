@@ -43,7 +43,7 @@
             }
         }
 
-        let platform, player, cursor, stars, score = 0, scoreText, bombs;
+        let platform, player, cursor, stars, score = 0, scoreText, bombs, gameOver = false;
         function preload() {
             this.load.image("sky", "assets/sky.png");
             this.load.image("platform", "assets/platform.png");
@@ -61,20 +61,18 @@
             this.add.image(400, 300, "sky");
             // to make an asset static=> no effect of gravity
             platform = this.physics.add.staticGroup();
-
             platform.create(400, 550, "platform").setScale(2).refreshBody();
             platform.create(600, 400, "platform");
             platform.create(50, 250, "platform");
             platform.create(650, 200, "platform");
-
             player = this.physics.add.sprite(400, 100, "hero");
             // to create cursor keys
             // for animation
-            bombs = this.physics.add.group({
-                key: "bomb",
-
-                setXY: { x: 400, y: 0 }
-            });
+            bombs = this.physics.add.group();
+            let bomb = bombs.create(400, 0, "bomb");
+            bomb.setBounce(1);
+            bomb.setCollideWorldBounds(true);
+            bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
             cursor = this.input.keyboard.createCursorKeys();
             stars = this.physics.add.group({
                 key: "star",
@@ -82,12 +80,12 @@
                 setXY: { x: 50, y: 0, stepX: 70 }
             })
             let game = this;
-
             this.physics.add.collider(player, platform);
             // let boundFn = collectStar.bind(this);
             this.physics.add.collider(player, stars, collectStar, null, this);
             this.physics.add.collider(platform, stars);
-            this.physics.add.collider(platform,bombs);
+            this.physics.add.collider(platform, bombs);
+            this.physics.add.collider(player, bombs, hitBomb.bind(this));
             // you can add text to phas
             scoreText = this.add.text(16, 16, "score:0", {
                 fontSize: "32px",
@@ -117,8 +115,6 @@
                 frames: this.anims.generateFrameNumbers("hero", { start: 4, end: 4 }),
                 frameRate: 10
             })
-
-
         }
         function collectStar(player, star) {
             star.disableBody(true, true);
@@ -129,18 +125,35 @@
                 stars.children.iterate(function (child) {
                     child.enableBody(true, child.x, 0, true, true);
                 })
+                let x = player.x < 400 ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+                let bomb = bombs.create(x, 0, "bomb");
+                bomb.setBounce(1);
+                bomb.setCollideWorldBounds(true);
+                bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
             }
+
+
+        }
+        function hitBomb() {
+            this.physics.pause();
+            player.setTint(0xff0000);
+            player.anims.play("normal");
+            gameOver = true
+            location.reload();
         }
         function update() {
+            if(gameOver==true){
+                return;
+            }
             if (cursor.left.isDown) {
                 player.setVelocityX(-160);
                 player.anims.play("left", true);
-                this.sound.playAudioSprite("sfx", "numkey");
+                // this.sound.playAudioSprite("sfx", "numkey");
 
             } else if (cursor.right.isDown) {
                 player.setVelocityX(160);
                 player.anims.play("right", true);
-                this.sound.playAudioSprite("sfx", "numkey");
+                // this.sound.playAudioSprite("sfx", "numkey");
             } else {
                 player.setVelocityX(0);
                 player.anims.play("normal");
@@ -149,7 +162,7 @@
             if (cursor.up.isDown && player.body.touching.down) {
                 player.setVelocityY(-480);
 
-                this.sound.playAudioSprite("sfx", "numkey");
+                // this.sound.playAudioSprite("sfx", "numkey");
             }
         }
         new Phaser.Game(config);
