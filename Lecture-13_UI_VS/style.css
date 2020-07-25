@@ -1,0 +1,70 @@
+*{
+    box-sizing: border-box;
+    color: white;
+    /* border: 1px solid;*/
+}
+
+body,html{
+    color:red;
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Roboto' ,sans-serif;
+}
+
+.container{
+    height: 100vh;
+    background-color: #1e2024;
+    /* To provide white space */
+    padding: 0 1rem;
+    padding-top: 1rem;
+}
+.top-row{
+    height: 55px;
+    display: flex;   
+    justify-content: space-between;
+}
+
+.btn-container{
+    border: 1px solid red;
+    width: 12rem;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+/* btn default styling */
+.btn{
+ background: #444857;
+    height: 80%;
+    width: 35%;
+    border-radius: 4px;
+    border: none;
+}
+
+.btn.new{
+    color: black;
+    background-image: 
+    linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+}
+.tabs-container{
+    width: calc(100vw - 15rem);
+    background: gray;
+    height: 100%;
+    text-align: center;
+}
+.main{
+
+}
+.file-explorer{
+
+}
+.content{
+
+}
+.textbox{
+
+}
+.terminal{
+
+}
+
