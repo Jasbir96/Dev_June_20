@@ -3,14 +3,12 @@
     color: white;
     /* border: 1px solid;*/
 }
-
 body,html{
     color:red;
     margin: 0px;
     padding: 0px;
     font-family: 'Roboto' ,sans-serif;
 }
-
 .container{
     height: 100vh;
     background-color: #1e2024;
@@ -22,10 +20,10 @@ body,html{
     height: 55px;
     display: flex;   
     justify-content: space-between;
+    margin-bottom: 1rem;
 }
-
 .btn-container{
-    border: 1px solid red;
+    /* border: 1px solid red; */
     width: 12rem;
     height: 100%;
     display: flex;
@@ -40,7 +38,6 @@ body,html{
     border-radius: 4px;
     border: none;
 }
-
 .btn.new{
     color: black;
     background-image: 
@@ -52,19 +49,30 @@ body,html{
     height: 100%;
     text-align: center;
 }
-.main{
-
+.main-container{
+    height: calc(100vh - 87px );
+    background: rebeccapurple;
+    display: flex;
 }
-.file-explorer{
 
+.file-explorer{
+    height: 100%;
+    background: black;
+    width: 30%;
 }
 .content{
-
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .textbox{
-
+    height: 69%;
+    border: 1px solid;
 }
 .terminal{
-
+    height: 28%;
+    border: 1px solid blue;
 }
 
