@@ -59,6 +59,7 @@ body,html{
     height: 100%;
     background: black;
     width: 30%;
+    overflow-y: auto;
 }
 .content{
     width: 70%;
