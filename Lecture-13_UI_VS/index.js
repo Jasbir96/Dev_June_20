@@ -25,6 +25,7 @@ $(document).ready(function () {
         parent: "#",
         text: name
     }]
+
     let childArr = addCh(pPath);
     data = [...data, ...childArr];
 
@@ -33,8 +34,8 @@ $(document).ready(function () {
             "check_callback": true,
             "data": data
         },
-    }).on("open_node.jstree", function (e, data) {
-        console.log(data);
+    }).on("open_node.jstree", function (e, onClickdata) {
+        console.log(onClickdata);
         // if (data.node.children.length > 0) {
         //     createGC(data.node.children)
         //     return;
@@ -44,17 +45,25 @@ $(document).ready(function () {
         // for (let i = 0; i < arr.length; i++) {
         //     $("#tree").jstree().create_node(nPath, arr[i], "last");
         // }
-        let children = data.node.children;
+        let children = onClickdata.node.children;
         for (let i = 0; i < children.length; i++) {
             let gcArr = addCh(children[i]);
             for (let j = 0; j < gcArr.length; j++) {
-                let doesExist = $('#tree').jstree(true).get_node(gcArr[j].id);
-                if(doesExist){
+                let doesExist = $('#tree').jstree(true)
+                    .get_node(gcArr[j].id);
+                if (doesExist) {
                     return;
                 }
                 // create logic
                 $("#tree").jstree().create_node(children[i], gcArr[j], "last");
             }
+        }
+    }).on("select_node.jstree", function (e, dataObj) {
+        let fPath = dataObj.node.id;
+        let isFile = fs.lstatSync(fPath).isFile();
+        if (isFile) {
+            let content = fs.readFileSync(fPath,"utf-8");
+            console.log(content);
         }
     })
 })
@@ -90,6 +99,4 @@ function addCh(parentPath) {
     }
     return cdata;
 }
-function createGC() {
 
-}

@@ -51,16 +51,17 @@ body,html{
 }
 .main-container{
     height: calc(100vh - 87px );
-    background: rebeccapurple;
+
     display: flex;
 }
 
 .file-explorer{
     height: 100%;
-    background: black;
+    background: inherit;
     width: 30%;
     overflow-y: auto;
 }
+
 .content{
     width: 70%;
     height: 100%;
@@ -76,4 +77,17 @@ body,html{
     height: 28%;
     border: 1px solid blue;
 }
-
+/* scroll height width */
+::-webkit-scrollbar{
+    height: 5px;
+    width:5px;
+}
+/* scrollbar handle */
+::-webkit-scrollbar-thumb{
+    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-track{
+border: 1px solid #141414;
+box-shadow: inset 0 0 2.5px 2px rgba(0, 0, 0, 0.363);
+}
