@@ -31,3 +31,7 @@
   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then
 #### Gaming
   * https://phaser.io/
+#### VS code 
+  * https://stackoverflow.com/questions/16526836/remove-folder-icon-in-jstree-while-using-checkbox
+  * http://jsfiddle.net/3q9Ma/223/
+  * https://stackoverflow.com/questions/4171111/jstree-open-a-branch
