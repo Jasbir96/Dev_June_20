@@ -6,20 +6,31 @@ $(document).ready(function () {
     // bubbling
     // css
     // $("#tree").html(dirName).on("click", function () {
-    //     let childrens = fs.readdirSync(parent);
-    //     // console.log(childrens);
-    //     for (let i = 0; i < childrens.length; i++) {
-    //         $(this).append(`<li>${childrens[i]}</li>`)
-    //     }
-    // });
-    // unique id => element
-    // parent=> ?id:#
-    // text
-    // i have path
-
+        //     let childrens = fs.readdirSync(parent);
+        //     // console.log(childrens);
+        //     for (let i = 0; i < childrens.length; i++) {
+            //         $(this).append(`<li>${childrens[i]}</li>`)
+            //     }
+            // });
+            // unique id => element
+            // parent=> ?id:#
+            // text
+            // i have path
+            
+    let mLoader = require("./node_modules/monaco-editor/min/vs/loader.js");
+    mLoader.require.config({ paths: { 'vs': './node_modules/monaco-editor/min/vs' } });
+    mLoader.require(['vs/editor/editor.main'], function () {
+        var editor = monaco.editor.create(document.getElementById('editor'), {
+            value: [
+                'function x() {',
+                '\tconsole.log("Hello world!");',
+                '}'
+            ].join('\n'),
+            language: 'javascript'
+        });
+    });
     let pPath = process.cwd();
     let name = path.basename(pPath);
-
     let data = [{
         id: pPath,
         parent: "#",
@@ -62,7 +73,7 @@ $(document).ready(function () {
         let fPath = dataObj.node.id;
         let isFile = fs.lstatSync(fPath).isFile();
         if (isFile) {
-            let content = fs.readFileSync(fPath,"utf-8");
+            let content = fs.readFileSync(fPath, "utf-8");
             console.log(content);
         }
     })

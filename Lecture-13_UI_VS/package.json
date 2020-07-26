@@ -14,5 +14,8 @@
     "electron": "^9.1.0",
     "jquery": "^3.5.1",
     "jstree": "^3.3.10"
+  },
+  "dependencies": {
+    "monaco-editor": "^0.20.0"
   }
 }
