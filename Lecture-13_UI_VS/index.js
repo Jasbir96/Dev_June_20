@@ -6,20 +6,27 @@ $(document).ready(function () {
     // bubbling
     // css
     // $("#tree").html(dirName).on("click", function () {
-        //     let childrens = fs.readdirSync(parent);
-        //     // console.log(childrens);
-        //     for (let i = 0; i < childrens.length; i++) {
-            //         $(this).append(`<li>${childrens[i]}</li>`)
-            //     }
-            // });
-            // unique id => element
-            // parent=> ?id:#
-            // text
-            // i have path
-            
-    let mLoader = require("./node_modules/monaco-editor/min/vs/loader.js");
-    mLoader.require.config({ paths: { 'vs': './node_modules/monaco-editor/min/vs' } });
-    mLoader.require(['vs/editor/editor.main'], function () {
+    //     let childrens = fs.readdirSync(parent);
+    //     // console.log(childrens);
+    //     for (let i = 0; i < childrens.length; i++) {
+    //         $(this).append(`<li>${childrens[i]}</li>`)
+    //     }
+    // });
+    // unique id => element
+    // parent=> ?id:#
+    // text
+    // i have path
+    const amdLoader = require('./node_modules/monaco-editor/min/vs/loader.js');
+    const amdRequire = amdLoader.require;
+    const amdDefine = amdLoader.require.define;
+    amdRequire.config({
+        baseUrl: './node_modules/monaco-editor/min'
+    });
+console.log(amdLoader);
+    // workaround monaco-css not understanding the environment
+    self.module = undefined;
+
+    amdRequire(['vs/editor/editor.main'], function () {
         var editor = monaco.editor.create(document.getElementById('editor'), {
             value: [
                 'function x() {',
