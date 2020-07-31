@@ -144,7 +144,7 @@ function handleClose(elem) {
     let fPath = $(elem).attr("id");
     delete tabArr[fPath];
     $(elem).parent().remove();
-    let fPath =$(".tab .tab-name").eq(0).attr("id");
+ fPath =$(".tab .tab-name").eq(0).attr("id");
     if(fPath){
         setData(fPath);
     }
