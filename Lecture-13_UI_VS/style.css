@@ -94,3 +94,28 @@ box-shadow: inset 0 0 2.5px 2px rgba(0, 0, 0, 0.363);
 #editor{
     height: 100%;
 }
+.tabs-container{
+    width: calc(100vw - 15rem);
+    background: #363030;
+    height: 100%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    padding-left: 10px;
+    overflow: auto;
+}
+
+.tab{
+    display: flex;
+    background-color: slategrey;
+    height: 73%;
+    align-items: center;
+    margin-right: 3px;
+}
+.fa-times{
+    align-self: start;
+    /* font-size:10px; */
+}
+.tab-name{
+
+}

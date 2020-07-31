@@ -1,12 +1,11 @@
 const $ = require("jquery");
 const path = require("path");
 const fs = require("fs");
-let myMonaco;
+let myMonaco, editor;
 require("jstree");
+let tabArr = {};
 $(document).ready(async function () {
-
-
-    let editor = await createEditor();
+    editor = await createEditor();
     // console.log(editor);
     let pPath = process.cwd();
     let name = path.basename(pPath);
@@ -52,17 +51,9 @@ $(document).ready(async function () {
         let fPath = dataObj.node.id;
         let isFile = fs.lstatSync(fPath).isFile();
         if (isFile) {
-            let content = fs.readFileSync(fPath, "utf-8");
-            // console.log(content);
-            editor.getModel().setValue(content);
-            var model = editor.getModel(); // we'll create a model for you if the editor created from string value.
-            let ext = fPath.split(".").pop();
-            if (ext == "js") {
-                ext = "javascript";
-            }
-        
-            myMonaco.editor.setModelLanguage(model, ext);
-
+            setData(fPath);
+            // create Tab
+            createTab(fPath);
         }
     })
 })
@@ -98,7 +89,6 @@ function addCh(parentPath) {
     }
     return cdata;
 }
-
 function createEditor() {
     const amdLoader = require('./node_modules/monaco-editor/min/vs/loader.js');
     const amdRequire = amdLoader.require;
@@ -125,3 +115,38 @@ function createEditor() {
 
 
 }
+function setData(fPath) {
+    let content = fs.readFileSync(fPath, "utf-8");
+    // console.log(content);
+    editor.getModel().setValue(content);
+    var model = editor.getModel(); // we'll create a model for you if the editor created from string value.
+    let ext = fPath.split(".").pop();
+    if (ext == "js") {
+        ext = "javascript";
+    }
+    myMonaco.editor.setModelLanguage(model, ext);
+}
+function createTab(fPath) {
+    let fName = path.basename(fPath);
+    if (!tabArr[fPath]) {
+        $("#tabs-row").append(`<div class="tab">
+        <div class="tab-name" id=${fPath} onclick=handleTab(this)>${fName}</div>
+        <i class="fas fa-times" id=${fPath} onclick=handleClose(this)></i>
+        </div>`);
+        tabArr[fPath] = fName;
+    }
+}
+function handleTab(elem) {
+    let fPath = $(elem).attr("id");
+    setData(fPath);
+}
+function handleClose(elem) {
+    let fPath = $(elem).attr("id");
+    delete tabArr[fPath];
+    $(elem).parent().remove();
+    let fPath =$(".tab .tab-name").eq(0).attr("id");
+    if(fPath){
+        setData(fPath);
+    }
+}
+
