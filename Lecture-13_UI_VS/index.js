@@ -1,6 +1,7 @@
 const $ = require("jquery");
 const path = require("path");
 const fs = require("fs");
+
 require("jstree");
 $(document).ready(function () {
     // bubbling
@@ -12,17 +13,15 @@ $(document).ready(function () {
     //         $(this).append(`<li>${childrens[i]}</li>`)
     //     }
     // });
-    // unique id => element
-    // parent=> ?id:#
-    // text
-    // i have path
+
+    // npm install monaco-editor
     const amdLoader = require('./node_modules/monaco-editor/min/vs/loader.js');
     const amdRequire = amdLoader.require;
     const amdDefine = amdLoader.require.define;
     amdRequire.config({
         baseUrl: './node_modules/monaco-editor/min'
     });
-console.log(amdLoader);
+
     // workaround monaco-css not understanding the environment
     self.module = undefined;
 
