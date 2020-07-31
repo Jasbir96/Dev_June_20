@@ -13,7 +13,6 @@ $(document).ready(function () {
     //         $(this).append(`<li>${childrens[i]}</li>`)
     //     }
     // });
-
     // npm install monaco-editor
     const amdLoader = require('./node_modules/monaco-editor/min/vs/loader.js');
     const amdRequire = amdLoader.require;
@@ -21,10 +20,8 @@ $(document).ready(function () {
     amdRequire.config({
         baseUrl: './node_modules/monaco-editor/min'
     });
-
     // workaround monaco-css not understanding the environment
     self.module = undefined;
-
     amdRequire(['vs/editor/editor.main'], function () {
         var editor = monaco.editor.create(document.getElementById('editor'), {
             value: [
