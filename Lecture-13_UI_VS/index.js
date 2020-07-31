@@ -1,37 +1,13 @@
 const $ = require("jquery");
 const path = require("path");
 const fs = require("fs");
-
+let myMonaco;
 require("jstree");
-$(document).ready(function () {
-    // bubbling
-    // css
-    // $("#tree").html(dirName).on("click", function () {
-    //     let childrens = fs.readdirSync(parent);
-    //     // console.log(childrens);
-    //     for (let i = 0; i < childrens.length; i++) {
-    //         $(this).append(`<li>${childrens[i]}</li>`)
-    //     }
-    // });
-    // npm install monaco-editor
-    const amdLoader = require('./node_modules/monaco-editor/min/vs/loader.js');
-    const amdRequire = amdLoader.require;
-    const amdDefine = amdLoader.require.define;
-    amdRequire.config({
-        baseUrl: './node_modules/monaco-editor/min'
-    });
-    // workaround monaco-css not understanding the environment
-    self.module = undefined;
-    amdRequire(['vs/editor/editor.main'], function () {
-        var editor = monaco.editor.create(document.getElementById('editor'), {
-            value: [
-                'function x() {',
-                '\tconsole.log("Hello world!");',
-                '}'
-            ].join('\n'),
-            language: 'javascript'
-        });
-    });
+$(document).ready(async function () {
+
+
+    let editor = await createEditor();
+    // console.log(editor);
     let pPath = process.cwd();
     let name = path.basename(pPath);
     let data = [{
@@ -77,7 +53,16 @@ $(document).ready(function () {
         let isFile = fs.lstatSync(fPath).isFile();
         if (isFile) {
             let content = fs.readFileSync(fPath, "utf-8");
-            console.log(content);
+            // console.log(content);
+            editor.getModel().setValue(content);
+            var model = editor.getModel(); // we'll create a model for you if the editor created from string value.
+            let ext = fPath.split(".").pop();
+            if (ext == "js") {
+                ext = "javascript";
+            }
+        
+            myMonaco.editor.setModelLanguage(model, ext);
+
         }
     })
 })
@@ -114,3 +99,29 @@ function addCh(parentPath) {
     return cdata;
 }
 
+function createEditor() {
+    const amdLoader = require('./node_modules/monaco-editor/min/vs/loader.js');
+    const amdRequire = amdLoader.require;
+    const amdDefine = amdLoader.require.define;
+    amdRequire.config({
+        baseUrl: './node_modules/monaco-editor/min'
+    });
+    // workaround monaco-css not understanding the environment
+    self.module = undefined;
+    return new Promise(function (resolve, reject) {
+        amdRequire(['vs/editor/editor.main'], function () {
+            var editor = monaco.editor.create(document.getElementById('editor'), {
+                value: [
+                    'function x() {',
+                    '\tconsole.log("Hello world!");',
+                    '}'
+                ].join('\n'),
+                language: 'javascript'
+            });
+            myMonaco = monaco;
+            resolve(editor);
+        });
+    })
+
+
+}
