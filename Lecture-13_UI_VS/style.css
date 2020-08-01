@@ -73,7 +73,7 @@ body,html{
     height: 69%;
     border: 1px solid;
 }
-.terminal{
+.terminal-container{
     height: 28%;
     /* border: 1px solid blue; */
 }

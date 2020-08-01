@@ -1,6 +1,9 @@
 const $ = require("jquery");
 const path = require("path");
 const fs = require("fs");
+const pty = require('node-pty');
+const os=require("os");
+const Terminal = require('xterm').Terminal;
 let myMonaco, editor;
 require("jstree");
 let tabArr = {};
@@ -14,7 +17,6 @@ $(document).ready(async function () {
         parent: "#",
         text: name
     }]
-
     let childArr = addCh(pPath);
     data = [...data, ...childArr];
 
@@ -56,7 +58,33 @@ $(document).ready(async function () {
             createTab(fPath);
         }
     })
+
+
+
+    // Terminal
+    // Initialize node-pty with an appropriate shell
+    const shell = process.env[os.platform() === 'win32' ? 'COMSPEC' : 'SHELL'];
+    const ptyProcess = pty.spawn(shell, [], {
+        name: 'xterm-color',
+        cols: 80,
+        rows: 30,
+        cwd: process.cwd(),
+        env: process.env
+    });
+
+    // Initialize xterm.js and attach it to the DOM
+    const xterm = new Terminal();
+    xterm.open(document.getElementById('terminal'));
+    // Setup communication between xterm.js and node-pty
+    xterm.onData(function (data) {
+        ptyProcess.write(data);
+        ptyProcess.on('data', function (data) {
+            xterm.write(data);
+        });
+
+    })
 })
+
 // { "id" : "ajson1", "parent" : "#", "text" : "Simple root node" }
 function addCh(parentPath) {
     let isDir = fs.lstatSync(parentPath).isDirectory();
@@ -144,8 +172,8 @@ function handleClose(elem) {
     let fPath = $(elem).attr("id");
     delete tabArr[fPath];
     $(elem).parent().remove();
- fPath =$(".tab .tab-name").eq(0).attr("id");
-    if(fPath){
+    fPath = $(".tab .tab-name").eq(0).attr("id");
+    if (fPath) {
         setData(fPath);
     }
 }
