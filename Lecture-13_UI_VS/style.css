@@ -29,6 +29,7 @@ body,html{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    outline:none;
 }
 /* btn default styling */
 .btn{
@@ -37,6 +38,7 @@ body,html{
     width: 35%;
     border-radius: 4px;
     border: none;
+    outline: none;
 }
 .btn.new{
     color: black;
@@ -58,12 +60,12 @@ body,html{
 .file-explorer{
     height: 100%;
     background: inherit;
-    width: 30%;
+    width: 25%;
     overflow-y: auto;
 }
 
 .content{
-    width: 70%;
+    width: 72%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -71,12 +73,19 @@ body,html{
 }
 .textbox{
     height: 69%;
-    border: 1px solid;
+    /* border: 1px solid; */
+    box-shadow: 0 1rem 3rem rgb(49, 47, 47);
+    
+
 }
+
 .terminal-container{
     height: 28%;
     /* overflow: auto; */
     width:100%;
+    box-shadow: 0 1rem 3rem rgb(140, 94, 185);
+    position: relative;
+    z-index:3;
     /* border: 1px solid blue; */
 }
 /* scroll height width */
@@ -135,4 +144,11 @@ overflow-y:visible;
     /* overflow: auto; */
     width:100%;
     /* border: 1px solid blue; */
+}
+/* how to override  */
+.jstree-default .jstree-clicked {
+    background: inherit;
+}
+.jstree-default .jstree-hovered {
+    background: inherit;
 }
