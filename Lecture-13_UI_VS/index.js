@@ -128,6 +128,7 @@ $(document).ready(async function () {
 
 
 
+
 })
 // { "id" : "ajson1", "parent" : "#", "text" : "Simple root node" }
 function addCh(parentPath) {
@@ -178,7 +179,8 @@ function createEditor() {
                     '\tconsole.log("Hello world!");',
                     '}'
                 ].join('\n'),
-                language: 'javascript'
+                language: 'javascript',
+                automaticLayout: true
             });
             myMonaco = monaco;
             resolve(editor);

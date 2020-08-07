@@ -141,7 +141,7 @@ overflow-y:visible;
 
 .terminal{
     height: 100%;
-    /* overflow: auto; */
+    overflow: auto;
     width:100%;
     /* border: 1px solid blue; */
 }
