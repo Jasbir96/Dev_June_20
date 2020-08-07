@@ -2,11 +2,15 @@ const $ = require("jquery");
 const path = require("path");
 const fs = require("fs");
 const pty = require('node-pty');
-const os=require("os");
+const os = require("os");
 const Terminal = require('xterm').Terminal;
+let { FitAddon } = require('xterm-addon-fit');
+
+
+
+// Make the terminal's size and geometry fit the size of #terminal-container
 let myMonaco, editor;
 require("jstree");
-let tabArr = {};
 $(document).ready(async function () {
     editor = await createEditor();
     // console.log(editor);
@@ -74,17 +78,22 @@ $(document).ready(async function () {
 
     // Initialize xterm.js and attach it to the DOM
     const xterm = new Terminal();
+    const fitAddon = new FitAddon();
+    xterm.loadAddon(fitAddon);
+
+    // Open the terminal in #terminal-container
     xterm.open(document.getElementById('terminal'));
     // Setup communication between xterm.js and node-pty
     xterm.onData(function (data) {
         ptyProcess.write(data);
-        ptyProcess.on('data', function (data) {
-            xterm.write(data);
-        });
-
     })
-})
 
+    ptyProcess.on('data', function (data) {
+        xterm.write(data);
+    });
+    
+    fitAddon.fit();
+})
 // { "id" : "ajson1", "parent" : "#", "text" : "Simple root node" }
 function addCh(parentPath) {
     let isDir = fs.lstatSync(parentPath).isDirectory();
