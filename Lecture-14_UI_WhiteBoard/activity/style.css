@@ -1,0 +1,20 @@
+*{
+    box-sizing: border-box;
+}
+
+body,html{
+    margin:0px;
+    padding: 0px;
+}
+.tool-panel{
+    height:70px;
+    border:1px solid;
+}
+.drawing-area{
+    height: calc(100vh - 70px);
+    border:1px solid;
+}
+canvas{
+    height:100%;
+    width:100%;
+}
