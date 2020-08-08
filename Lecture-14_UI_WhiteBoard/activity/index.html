@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <!-- <div class="tool-panel"></div> -->
+    <div class="tool-panel"></div>
     <div class="drawing-area">
         <canvas class="board"></canvas>
     </div>
@@ -17,13 +17,17 @@
 
         let a = 10;
         let board = document.querySelector(".board");
-        board.height=window.innerHeight;
-        board.width=window.innerWidth;
+        board.height = window.innerHeight;
+        board.width = window.innerWidth;
+        window.addEventListener("resize", function () {
+         board.height = window.innerHeight;
+        board.width = window.innerWidth;
+        })
 
         let ctx = board.getContext("2d");
         ctx.fillStyle = "red";
-    ctx.beginPath(0, 0);
-      
+        ctx.beginPath(0, 0);
+
         // ctx.beginPath();
         // ctx.moveTo(20, 40);
         // ctx.lineTo(150, 150);
