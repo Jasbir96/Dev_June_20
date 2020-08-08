@@ -221,6 +221,6 @@ function handleClose(elem) {
     fPath = $(".tab .tab-name").eq(0).attr("id");
     if (fPath) {
         setData(fPath);
-    }
+    }else
 }
 
