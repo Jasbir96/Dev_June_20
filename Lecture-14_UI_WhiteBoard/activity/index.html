@@ -9,25 +9,41 @@
 </head>
 
 <body>
-    <div class="tool-panel"></div>
+    <div class="tool-panel">
+        <div class="hamburger-icon"></div>
+        <div class="tool-bar">
+            <div class="tool">
+                
+                    <img src="./NewIcons/Black_Pencil.svg" alt="" id="pencil" class="tool-img">
+                
+                <div class="tool-options"></div>
+            </div>
+            <div class="tool">
+                
+                    <img src="./NewIcons/Eraser.svg" alt="" id="eraser" class="tool-img">
+               
+                <div class="tool-options"></div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="drawing-area">
         <canvas class="board"></canvas>
     </div>
     <script>
-
         let a = 10;
         let board = document.querySelector(".board");
         board.height = window.innerHeight;
         board.width = window.innerWidth;
         window.addEventListener("resize", function () {
-         board.height = window.innerHeight;
-        board.width = window.innerWidth;
+            board.height = window.innerHeight;
+            board.width = window.innerWidth;
         })
-
         let ctx = board.getContext("2d");
         ctx.fillStyle = "red";
-        ctx.beginPath(0, 0);
-
+        
         // ctx.beginPath();
         // ctx.moveTo(20, 40);
         // ctx.lineTo(150, 150);
@@ -37,6 +53,7 @@
         // to print 
         // ctx.stroke();
     </script>
+    <script src="tools.js"></script>
     <script src="script.js"></script>
 </body>
 

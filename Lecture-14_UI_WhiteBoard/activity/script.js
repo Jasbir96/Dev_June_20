@@ -1,5 +1,6 @@
 
 let ispendown = false;
+;
 board.addEventListener("mousedown", function (e) {
     // path start
     let x = e.clientX;
@@ -7,6 +8,7 @@ board.addEventListener("mousedown", function (e) {
    let top= getPosition();
    y = y - top;
     //  move to
+    ctx.beginPath(0, 0);
     ctx.moveTo(x, y);
     ispendown = true;
 })
@@ -22,13 +24,12 @@ board.addEventListener("mousemove", function (e) {
     }
     // repeat
 })
-
-board.addEventListener("mouseup", function (e) {
+window.addEventListener("mouseup", function (e) {
     // mouse up
+    // ctx.closePath();
     ispendown = false;
 
 })
-
 function getPosition() {
     let { top } = board.getBoundingClientRect();
     return top;

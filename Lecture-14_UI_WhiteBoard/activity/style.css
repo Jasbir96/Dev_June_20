@@ -6,7 +6,28 @@ body,html{
     padding: 0px;
 }
 .tool-panel{
-    height:70px;
-    border:1px solid;
+    height: 70px;
+    border: 1px solid;
+    display: flex;
+    justify-content: space-between;
 }
+.hamburger-icon{
+    width: 5%;
+    height: 80%;
+    border:1px solid
+}
+.tool-bar{
+    width: 80%;
+    height: 86%;
+    border: 1px solid;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+}
+.tool-img{
+    height: 85%;
+    width: 10%;
+}
+.tool{
 
+}
