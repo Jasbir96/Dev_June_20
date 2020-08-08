@@ -1,7 +1,6 @@
 *{
     box-sizing: border-box;
 }
-
 body,html{
     margin:0px;
     padding: 0px;
@@ -11,10 +10,6 @@ body,html{
     border:1px solid;
 }
 .drawing-area{
-    height: calc(100vh - 70px);
+    height: 100vh;
     border:1px solid;
-}
-canvas{
-    height:100%;
-    width:100%;
 }

@@ -9,15 +9,29 @@
 </head>
 
 <body>
-    <div class="tool-panel"></div>
+    <!-- <div class="tool-panel"></div> -->
     <div class="drawing-area">
         <canvas class="board"></canvas>
     </div>
     <script>
+
+        let a = 10;
         let board = document.querySelector(".board");
+        board.height=window.innerHeight;
+        board.width=window.innerWidth;
+
         let ctx = board.getContext("2d");
-        ctx.fillStyle="red";
-        ctx.fillRect(50, 50, 50, 50);
+        ctx.fillStyle = "red";
+    ctx.beginPath(0, 0);
+      
+        // ctx.beginPath();
+        // ctx.moveTo(20, 40);
+        // ctx.lineTo(150, 150);
+        // ctx.lineTo(200, 70);
+        // ctx.moveTo(30,40);
+        // ctx.lineTo(100,40);
+        // to print 
+        // ctx.stroke();
     </script>
     <script src="script.js"></script>
 </body>
