@@ -1,8 +1,6 @@
 
-let ispendown = false;
-;
+let ispendown = false;;
 let points = [];
-
 board.addEventListener("mousedown", function (e) {
     // path start
     let x = e.clientX;
@@ -13,7 +11,6 @@ board.addEventListener("mousedown", function (e) {
     ctx.beginPath(0, 0);
     ctx.moveTo(x, y);
     ispendown = true;
-
     let mdp = {
         x: x,
         y: y,
@@ -42,7 +39,6 @@ board.addEventListener("mousemove", function (e) {
         points.push(mmp);
     }
     // repeat
-
 })
 window.addEventListener("mouseup", function (e) {
     // mouse up
@@ -67,5 +63,30 @@ function redraw() {
             ctx.stroke();
         }
     }
+}
+
+function undoMaker() {
+    // addFirst => unshift, 
+    // removeFirst => shift
+    //  addLast=> push
+    // removeLast => pop
+    if (points.length >= 2) {
+        // pop last line
+        for (let i = points.length - 1; i >= 0; i--) {
+            let { id } = points[i];
+            if (id == "md") {
+                points.pop();
+                break;
+            }else{
+//  mm
+                points.pop();
+            }
+        }
+        //  clear Rect
+        ctx.clearRect(0, 0, board.width, board.height);
+        // call redraw
+        redraw();
+    }
+
 }
 
