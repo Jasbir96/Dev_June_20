@@ -1,6 +1,7 @@
 
 let ispendown = false;;
 let points = [];
+let redoArr = [];
 board.addEventListener("mousedown", function (e) {
     // path start
     let x = e.clientX;
@@ -64,7 +65,6 @@ function redraw() {
         }
     }
 }
-
 function undoMaker() {
     // addFirst => unshift, 
     // removeFirst => shift
@@ -72,21 +72,31 @@ function undoMaker() {
     // removeLast => pop
     if (points.length >= 2) {
         // pop last line
+        let tempArr = [];
         for (let i = points.length - 1; i >= 0; i--) {
             let { id } = points[i];
             if (id == "md") {
-                points.pop();
+                tempArr.unshift(points.pop());
                 break;
-            }else{
-//  mm
-                points.pop();
+            } else {
+                //  mm
+                tempArr.unshift(points.pop());
             }
         }
         //  clear Rect
         ctx.clearRect(0, 0, board.width, board.height);
         // call redraw
+        redoArr.push(tempArr);
         redraw();
     }
-
 }
-
+function redoMaker() {
+    if (redoArr.length > 0) {
+        let mrPathArr = redoArr.pop();
+        //  add all points to undo arr
+        points.push(...mrPathArr);
+        ctx.clearRect(0, 0, board.width, board.height);
+        // call redraw
+        redraw();
+    }
+}
