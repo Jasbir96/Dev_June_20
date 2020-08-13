@@ -2,6 +2,7 @@
 let ispendown = false;;
 let points = [];
 let redoArr = [];
+
 board.addEventListener("mousedown", function (e) {
     // path start
     let x = e.clientX;
@@ -65,6 +66,7 @@ function redraw() {
         }
     }
 }
+
 function undoMaker() {
     // addFirst => unshift, 
     // removeFirst => shift

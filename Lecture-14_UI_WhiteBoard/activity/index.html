@@ -15,15 +15,27 @@
         <div class="tool-bar">
             <div class="tool">
                 <img src="./NewIcons/Black_Pencil.svg" alt="" id="pencil" class="tool-img">
-
-                <div class="tool-options"></div>
+                <div class="tool-options" id="pencil-options">
+                    <div class="slider">
+                        <input type="range"></div>
+                    <div class="colors">
+                        <div class="color red" onclick="handleColor('red')"></div>
+                        <div class="color green" onclick="handleColor('green')"></div>
+                        <div class="color blue" onclick="handleColor('blue')"></div>
+                    </div>
+                </div>
             </div>
-            <div class="tool">
 
+
+
+
+
+            <div class="tool">
                 <img src="./NewIcons/Eraser.svg" alt="" id="eraser" class="tool-img">
 
-                <div class="tool-options"></div>
-
+                <div class="tool-options" id="eraser-options">
+                    <div class="slider"><input type="range"></div>
+                </div>
             </div>
             <div class="tool">
 
@@ -35,7 +47,6 @@
 
                 <img src="./NewIcons/Redo.svg" alt="" id="redo" class="tool-img">
 
-                <div class="tool-options"></div>
 
             </div>
         </div>
