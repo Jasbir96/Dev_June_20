@@ -17,7 +17,9 @@
                 <img src="./NewIcons/Black_Pencil.svg" alt="" id="pencil" class="tool-img">
                 <div class="tool-options" id="pencil-options">
                     <div class="slider">
-                        <input type="range"></div>
+                        <!-- value  -->
+                        <!-- <input type="range" value='5' min='1' max='50' onChange='setWidth(value)'></div> -->
+                        <input type="range" value='5' min='1' max='50'></div>
                     <div class="colors">
                         <div class="color red" onclick="handleColor('red')"></div>
                         <div class="color green" onclick="handleColor('green')"></div>
@@ -25,29 +27,27 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
             <div class="tool">
                 <img src="./NewIcons/Eraser.svg" alt="" id="eraser" class="tool-img">
 
                 <div class="tool-options" id="eraser-options">
-                    <div class="slider"><input type="range"></div>
+                    <!-- <input type="range" value='5' min='1' max='50' onChange='setWidth(value)'></div> -->
+                    <div class="slider">
+                        <input type="range" value='5' min='1' max='50'></div>
                 </div>
             </div>
             <div class="tool">
 
                 <img src="./NewIcons/Undo.svg" alt="" id="undo" class="tool-img">
-
-
             </div>
             <div class="tool">
 
                 <img src="./NewIcons/Redo.svg" alt="" id="redo" class="tool-img">
 
 
+            </div>
+            <div class="tool">
+                <img src="./NewIcons/StickyNote.svg" alt="" id="sticky" class="tool-img">
             </div>
         </div>
     </div>
@@ -84,6 +84,8 @@
     </script>
     <script src="tools.js"></script>
     <script src="script.js"></script>
+    <script src="sticky.js"></script>
+   
 </body>
 
 </html>

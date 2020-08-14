@@ -1,12 +1,18 @@
-
 let pencil = document.querySelector("#pencil");
 let eraser = document.querySelector("#eraser");
 let undo = document.querySelector("#undo");
 let redo = document.querySelector("#redo");
 let pencilOptions = document.querySelector("#pencil-options");
 let eraserOptions = document.querySelector("#eraser-options");
+let sliders = document.querySelectorAll("input[type='range']");
+let sticky = document.querySelector("#sticky");
 // ctx.lineWidth=10;
 let activeTool = "pencil";
+ctx.lineJoin = "round";
+ctx.lineCap = "round";
+ctx.miterLimit = 1;
+// ctx.imageSmoothingEnabled=true;
+console.log(ctx);
 pencil.addEventListener("click", function () {
     if (activeTool == "pencil") {
         //  pencil options show
@@ -33,8 +39,13 @@ undo.addEventListener("click", function () {
 redo.addEventListener("click", function () {
     redoMaker();
 })
+sticky.addEventListener("click", function () {
+    createSticky();
+})
+// key stroke
 document.addEventListener("keydown", function (e) {
     var evtobj = e;
+    // z=> 90
     if (evtobj.keyCode == 90 && evtobj.ctrlKey)
         undoMaker();
 })
@@ -43,7 +54,16 @@ document.addEventListener("keydown", function (e) {
     if (evtobj.keyCode == 89 && evtobj.ctrlKey)
         redoMaker();
 })
-
 function handleColor(color) {
     ctx.strokeStyle = color;
 }
+
+sliders.forEach(function (slider) {
+    slider.addEventListener("change", function () {
+        let value = slider.value;
+        ctx.lineWidth = value;
+    })
+})
+
+
+
