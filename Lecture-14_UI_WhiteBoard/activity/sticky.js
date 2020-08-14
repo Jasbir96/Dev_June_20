@@ -22,8 +22,11 @@ function createSticky() {
     //  add styling to them using css classes
     stickyPad.setAttribute("class", "stickyPad");
     navBar.setAttribute("class", "navBar");
+    close.setAttribute("class", "close");
+    minimize.setAttribute("class", "minimize");
     container.setAttribute("class", "container");
     textarea.setAttribute("class", "textarea");
+
     // append it body
     document.body.appendChild(stickyPad);
 }

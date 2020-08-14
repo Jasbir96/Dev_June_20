@@ -102,3 +102,17 @@ textarea{
     height: 100%;
     width: 100%;
 }
+.close{
+    height: 60%;
+    width: 9%;
+    border-radius: 50%;
+    background: red;
+    margin-right: 0.4rem;
+}
+.minimize{
+    height: 60%;
+    width: 9%;
+    border-radius: 50%;
+    background: green;
+    margin-right: 0.4rem;
+}
