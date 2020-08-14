@@ -19,7 +19,7 @@
                     <div class="slider">
                         <!-- value  -->
                         <!-- <input type="range" value='5' min='1' max='50' onChange='setWidth(value)'></div> -->
-                        <input type="range" value='5' min='1' max='50'></div>
+                        <input type="range" value='5' min='1' max='50' id="pencil-slider"></div>
                     <div class="colors">
                         <div class="color red" onclick="handleColor('red')"></div>
                         <div class="color green" onclick="handleColor('green')"></div>
@@ -44,6 +44,9 @@
             </div>
             <div class="tool">
                 <img src="./NewIcons/StickyNote.svg" alt="" id="sticky" class="tool-img">
+            </div>
+            <div class="tool">
+                <input type="file" id="upload" accept="image/*" class="tool-img">
             </div>
         </div>
     </div>
@@ -81,6 +84,7 @@
     <script src="tools.js"></script>
     <script src="script.js"></script>
     <script src="sticky.js"></script>
+    <script src="img.js"></script>
 </body>
 
 </html>

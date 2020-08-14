@@ -26,7 +26,6 @@ function createSticky() {
     minimize.setAttribute("class", "minimize");
     container.setAttribute("class", "container");
     textarea.setAttribute("class", "textarea");
-
     // append it body
     document.body.appendChild(stickyPad);
     let initialX = null;

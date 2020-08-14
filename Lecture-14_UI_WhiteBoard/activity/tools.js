@@ -6,6 +6,8 @@ let pencilOptions = document.querySelector("#pencil-options");
 let eraserOptions = document.querySelector("#eraser-options");
 let sliders = document.querySelectorAll("input[type='range']");
 let sticky = document.querySelector("#sticky");
+let pencilSize = 5;
+let eraserSize = 5;
 // ctx.lineWidth=10;
 let activeTool = "pencil";
 ctx.lineJoin = "round";
@@ -21,6 +23,7 @@ pencil.addEventListener("click", function () {
         activeTool = "pencil";
         eraserOptions.classList.remove("show");
         ctx.strokeStyle = "black";
+        ctx.lineWidth = pencilSize
     }
 })
 eraser.addEventListener("click", function () {
@@ -31,6 +34,7 @@ eraser.addEventListener("click", function () {
         activeTool = "eraser";
         pencilOptions.classList.remove("show");
         ctx.strokeStyle = "white";
+        ctx.lineWidth = eraserSize;
     }
 })
 undo.addEventListener("click", function () {
@@ -57,11 +61,15 @@ document.addEventListener("keydown", function (e) {
 function handleColor(color) {
     ctx.strokeStyle = color;
 }
-
 sliders.forEach(function (slider) {
     slider.addEventListener("change", function () {
         let value = slider.value;
         ctx.lineWidth = value;
+        if (activeTool == "pencil") {
+pencilSize=ctx.lineWidth;
+        }else{
+            eraserSize=ctx.lineWidth;
+        }
     })
 })
 
