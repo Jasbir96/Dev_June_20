@@ -81,7 +81,7 @@ input[type='range']{
 .stickyPad{
     height: 14rem;
     width: 16rem;
-    background: yellow;
+    /* background: yellow; */
     position: absolute;
     top: 34vh;
     left: 20vw;
