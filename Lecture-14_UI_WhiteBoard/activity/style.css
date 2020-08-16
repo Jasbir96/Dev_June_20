@@ -116,3 +116,7 @@ textarea{
     background: green;
     margin-right: 0.4rem;
 }
+.upload-img{
+    height: 90%;
+    width:100%;
+}
