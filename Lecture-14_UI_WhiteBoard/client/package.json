@@ -9,5 +9,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "socket.io-client": "^2.3.0"
+  }
 }
