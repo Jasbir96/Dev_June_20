@@ -19,6 +19,7 @@ board.addEventListener("mousedown", function (e) {
         width: ctx.lineWidth
     }
     points.push(mdp);
+    socket.emit("md", mdp);
 })
 board.addEventListener("mousemove", function (e) {
     //  lineto 
@@ -35,8 +36,10 @@ board.addEventListener("mousemove", function (e) {
             id: "mm",
             color: ctx.strokeStyle,
             width: ctx.lineWidth
+
         }
         points.push(mmp);
+        socket.emit("mm", mmp);
     }
     // repeat
 })
