@@ -9,7 +9,7 @@ upload.addEventListener("change", function (e) {
     img.src = URL.createObjectURL(file);
     img.setAttribute("class", "upload-img");
     container.appendChild(img);
-//  remove
+    //  remove
     uInp.value = null;
     // const reader = new FileReader();
     // reader.readAsDataURL(upload.files[0]);    
@@ -18,4 +18,12 @@ upload.addEventListener("change", function (e) {
     //     img.src = reader.result;
     // }
 })
-
+let download = document.querySelector("#download");
+download.addEventListener("click", function () {
+    let a = document.createElement("a");
+    a.href = board.toDataURL('image/png');
+    a.download = 'file.png';
+    a.click();
+    a.remove();
+}
+)
