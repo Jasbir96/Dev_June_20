@@ -24,6 +24,7 @@ io.on("connection", function (socket) {
 //     res.end("<h1>Welcome to home Page</h1>")
 // })
 //  connection
-httpServer.listen(3000, function () {
+let port = process.env.PORT || 3000;
+httpServer.listen(port, function () {
     console.log("Server started at port 3000");
 })
