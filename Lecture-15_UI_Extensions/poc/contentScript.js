@@ -19,10 +19,8 @@ function changeImages() {
 
     }
 }
-
 // response
-chrome.runtime.onMessage.addListener(
-    function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener( function (request, sender, sendResponse) {
         // console.log(request)
         sendResponse("Hello from content");
         // console.log(sender);
