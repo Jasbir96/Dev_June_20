@@ -1,5 +1,5 @@
 // connect to ws server
-const socket = io.connect("http://localhost:3000");
+const socket = io.connect("https://r-whiteboard.herokuapp.com/");
 console.log(socket);
 let pencil = document.querySelector("#pencil");
 let eraser = document.querySelector("#eraser");

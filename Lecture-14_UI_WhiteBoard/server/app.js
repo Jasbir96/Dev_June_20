@@ -19,7 +19,6 @@ io.on("connection", function (socket) {
         socket.broadcast.emit("onmm", point);
     })
 })
-
 // app.get("/home", function (req, res) {
 //     res.end("<h1>Welcome to home Page</h1>")
 // })
@@ -28,3 +27,7 @@ let port = process.env.PORT || 3000;
 httpServer.listen(port, function () {
     console.log("Server started at port 3000");
 })
+// cd => client folder
+//  npm install electron-packager --save-dev
+// copy scripts into package.json
+//  npm run package-*
