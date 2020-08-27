@@ -3,11 +3,16 @@ let blockList = [];
 // recive site => add to blocklist
 chrome.runtime.onMessage.addListener
     (function (request, sender, sendResponse) {
-        let newEntry = request;
-        console.log(newEntry)
-        blockList.push({ site: newEntry, time: 10 })
-        console.log(sender);
-        sendResponse(true);
+        if (request.type == "getList") {
+            return sendResponse(blockList);
+        } else {
+            let newEntry = request.link;
+            // console.log(newEntry)
+            blockList.push({ site: newEntry, time: 10 })
+            console.log(sender);
+            sendResponse(true);
+        }
+
     });
 //  polling
 // tracker
@@ -56,6 +61,4 @@ function removeTab(tab) {
     })
 
 }
-
-
 
