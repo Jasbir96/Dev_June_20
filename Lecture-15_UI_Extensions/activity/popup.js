@@ -13,7 +13,6 @@ button.addEventListener("click", async function () {
         li.innerHTML = toBeBlocked + '<i class="fas fa-times"></i>';
         ul.appendChild(li);
         input.value = '';
-
         let i = li.querySelector("i");
         i.addEventListener("click", function () {
             i.parentNode.remove();
