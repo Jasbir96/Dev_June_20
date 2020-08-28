@@ -12,7 +12,8 @@ button.addEventListener("click", async function () {
             type: "url",
             link: toBeBlocked
         });
-        addToList(toBeBlocked);
+        
+            addToList(toBeBlocked);
         input.value = '';
     }
 })
@@ -34,18 +35,18 @@ function sendMessage(message) {
             resolve(response)
         });
     })
-
 }
 function addToList(toBeBlocked) {
     let li = document.createElement("li");
     li.setAttribute("class", "list-group-item");
     li.innerHTML = toBeBlocked + '<i class="fas fa-times"></i>';
     ul.appendChild(li);
-
     let i = li.querySelector("i");
-    i.addEventListener("click", function () {
+    i.addEventListener("click", async function () {
         // send message remove
+        let site = i.parentNode.textContent;
+        // console.log(site)
+        await sendMessage({ type: "remove", site });
         i.parentNode.remove();
-
     })
 }
