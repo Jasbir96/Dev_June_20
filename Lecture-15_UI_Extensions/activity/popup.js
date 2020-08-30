@@ -36,6 +36,7 @@ function sendMessage(message) {
         });
     })
 }
+
 function addToList(toBeBlocked) {
     let li = document.createElement("li");
     li.setAttribute("class", "list-group-item");

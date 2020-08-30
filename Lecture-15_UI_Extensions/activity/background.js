@@ -1,6 +1,7 @@
 let blockList = [];
 
 // recive site => add to blocklist
+
 chrome.runtime.onMessage.addListener
     (async function (request, sender, sendResponse) {
         if (request.type == "getList") {
