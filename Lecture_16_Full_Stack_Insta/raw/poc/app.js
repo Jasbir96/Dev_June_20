@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(function checkBody(req, res, next) {
     console.log("I will run after express.json");
     let keysArray = Object.keys(req.body);
-    if (keysArray.length <= 0) {
+    if (keysArray.length == 0) {
         res.status(200).json({
             "status": "failure",
             "message": "Body Could not be empty"
@@ -34,45 +34,16 @@ app.use(function checkBody(req, res, next) {
 // npm i nodemon --save-dev
 const { v4: uuidv4 } = require('uuid');
 // get All userDB
-app.get("/user", (req, res) => {
+// **********************user******************************** 
+const getAllUser = (req, res) => {
     // req paramatere -> user id
     // console.log(req.params);
     res.status(201).json({
         status: "success",
         userDB: userDB
     })
-})
-// get One
-app.get("/user/:uid", (req, res) => {
-    // req paramatere -> user id
-    let cUid = req.params.uid;
-    let userArr = userDB.filter((user) => {
-        return user.uid == cUid;
-    });
-    console.log(req.params);
-    res.status(201).json({
-        status: "success",
-        user: userArr.length == 0 ? "no user" : userArr[0]
-    })
-    // next()
-})
-// create 
-app.post("/user", (req, res) => {
-    let user = req.body;
-    // console.log(user);
-    user.uid = uuidv4();
-    userDB.push(user);
-    // saved to disk
-    fs.writeFileSync(path.join(__dirname, "/db/user.json"), JSON.stringify(userDB));
-    // res
-    // res.status(201).json({
-    //     status: "success",
-    //     user: req.body
-    // })
-})
-// // updated => key search 
-
-app.patch("/user/:uid", (req, res) => {
+}
+const updateUser = (req, res) => {
     let user = getUserById(req.params.uid);
     let toBeUpdatedObj = req.body;
     // user , obj
@@ -87,9 +58,8 @@ app.patch("/user/:uid", (req, res) => {
         user: user
     })
 
-})
-// delete => filter
-app.delete("/user/:uid", (req, res) => {
+}
+const deleteUser = (req, res) => {
     let cid = req.params.uid;
     console.log(userDB.length);
     userDB = userDB.filter((user) => { return user.uid != cid; })
@@ -99,8 +69,111 @@ app.delete("/user/:uid", (req, res) => {
         userDB,
         length: userDB.length
     })
-})
+}
+const getUser = (req, res) => {
+    // req paramatere -> user id
+    let cUid = req.params.uid;
+    let userArr = userDB.filter((user) => {
+        return user.uid == cUid;
+    });
+    console.log(req.params);
+    res.status(201).json({
+        status: "success",
+        user: userArr.length == 0 ? "no user" : userArr[0]
+    })
+    // next()
+}
+const createUser = (req, res) => {
+    let user = req.body;
+    // console.log(user);
+    user.uid = uuidv4();
+    userDB.push(user);
+    // saved to disk
+    fs.writeFileSync(path.join(__dirname, "/db/user.json"), JSON.stringify(userDB));
+    // res
+    // res.status(201).json({
+    //     status: "success",
+    //     user: req.body
+    // })
+}
+app.route("/api/v1/user").get(getAllUser).post(createUser);
+app.route("/api/v1/user/:uid").get(getUser).patch(updateUser).delete(deleteUser);
+// ***************************POST*******************************
+app.route("/api/v1/post").get(getAllPost).post(createPost);
+app.route("/api/v1/post/:uid").get(getPost).patch(updatePost).delete(deletePost);
+// app.get("api/v1/user", getAllUser);
+// // get One
+// // create 
+// app.post("api/v1/user", createUser)
+// // // updated => key search 
 
+// app.get("api/v1/user/:uid", getUser)
+// app.patch("api/v1/user/:uid", updateUser)
+// // delete => filter
+// app.delete("api/v1/user/:uid", deleteUser)
+// POST
+const getAllPost = (req, res) => {
+    // req paramatere -> user id
+    // console.log(req.params);
+    res.status(201).json({
+        status: "success",
+        userDB: userDB
+    })
+}
+const updatePost = (req, res) => {
+    let user = getUserById(req.params.uid);
+    let toBeUpdatedObj = req.body;
+    // user , obj
+    // user.something
+    for (let key in toBeUpdatedObj) {
+        console.log(key);
+        user[key] = toBeUpdatedObj[key];
+    }
+    fs.writeFileSync(path.join(__dirname, "/db/user.json"), JSON.stringify(userDB));
+    res.status(200).json({
+        status: "success",
+        user: user
+    })
+
+}
+const deletePost = (req, res) => {
+    let cid = req.params.uid;
+    console.log(userDB.length);
+    userDB = userDB.filter((user) => { return user.uid != cid; })
+    fs.writeFileSync(path.join(__dirname, "/db/user.json"), JSON.stringify(userDB));
+    res.status(200).json({
+        status: "success",
+        userDB,
+        length: userDB.length
+    })
+}
+const getPost = (req, res) => {
+    // req paramatere -> user id
+    let cUid = req.params.uid;
+    let userArr = userDB.filter((user) => {
+        return user.uid == cUid;
+    });
+    console.log(req.params);
+    res.status(201).json({
+        status: "success",
+        user: userArr.length == 0 ? "no user" : userArr[0]
+    })
+    // next()
+}
+const createPost = (req, res) => {
+    let user = req.body;
+    // console.log(user);
+    user.uid = uuidv4();
+    userDB.push(user);
+    // saved to disk
+    fs.writeFileSync(path.join(__dirname, "/db/user.json"), JSON.stringify(userDB));
+    // res
+    // res.status(201).json({
+    //     status: "success",
+    //     user: req.body
+    // })
+}
+// 404 route 
 app.use("*", (req, res) => {
     res.status(404).json({
         "status": "failure",
