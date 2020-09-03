@@ -6,8 +6,28 @@ const path = require("path");
 // const { response } = require("express");
 const app = express();
 // // for accepting data in req.body
+//  it will always run
+// user defined
+app.use(function before(req, res, next) {
+    console.log("I will run before express.json");
+    console.log(req.body);
+    next();
+})
+// user defined middleware
+// it tracks json obj in http body and add it to req.body
 app.use(express.json());
-
+app.use(function checkBody(req, res, next) {
+    console.log("I will run after express.json");
+    let keysArray = Object.keys(req.body);
+    if (keysArray.length <= 0) {
+        res.status(200).json({
+            "status": "failure",
+            "message": "Body Could not be empty"
+        })
+    } else {
+        next();
+    }
+})
 // get => some changing parameter 
 // getOne
 // npm i uuid
@@ -34,23 +54,24 @@ app.get("/user/:uid", (req, res) => {
         status: "success",
         user: userArr.length == 0 ? "no user" : userArr[0]
     })
+    // next()
 })
 // create 
 app.post("/user", (req, res) => {
     let user = req.body;
-    console.log(user);
+    // console.log(user);
     user.uid = uuidv4();
     userDB.push(user);
-
     // saved to disk
     fs.writeFileSync(path.join(__dirname, "/db/user.json"), JSON.stringify(userDB));
     // res
-    res.status(201).json({
-        status: "success",
-        user: req.body
-    })
+    // res.status(201).json({
+    //     status: "success",
+    //     user: req.body
+    // })
 })
 // // updated => key search 
+
 app.patch("/user/:uid", (req, res) => {
     let user = getUserById(req.params.uid);
     let toBeUpdatedObj = req.body;
@@ -65,6 +86,7 @@ app.patch("/user/:uid", (req, res) => {
         status: "success",
         user: user
     })
+
 })
 // delete => filter
 app.delete("/user/:uid", (req, res) => {
@@ -77,10 +99,14 @@ app.delete("/user/:uid", (req, res) => {
         userDB,
         length: userDB.length
     })
-
 })
 
-
+app.use("*", (req, res) => {
+    res.status(404).json({
+        "status": "failure",
+        "message": "resource not found"
+    })
+})
 // userDB.splice(idx,1);
 // get ,post ,patch ,delete => express methods
 // 127.0.0.1:3000=> localhost:3000/home
@@ -90,7 +116,8 @@ app.delete("/user/:uid", (req, res) => {
 // update => update a user
 // delete a user
 // name,password,handle,image_url,bio,uid,email
-
+// https://www.flipkart.com/television-store/
+// protocol// web.hostname.subdomain/route 
 app.listen(3000, () => {
     console.log("Server started at port 3000");
 })
