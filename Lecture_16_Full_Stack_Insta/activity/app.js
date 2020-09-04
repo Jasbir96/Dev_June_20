@@ -1,10 +1,9 @@
 //  api making framework
 const express = require("express");
-let userDB = require("./db/user.json");
 const fs = require("fs");
 const path = require("path");
 // const { response } = require("express");
-const userRouter = require("./router/userRouter");
+const userRouter = require("./router/userRoutes");
 const app = express();
 // // for accepting data in req.body
 //  it will always run

@@ -2,3 +2,4 @@ node_modules
 credentials.js
 ping-pong
 release-builds
+config

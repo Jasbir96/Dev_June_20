@@ -1,4 +1,6 @@
 const userDB = require("../model/user.json");
+const userModel = require("../model/userModel");
+
 const { v4: uuidv4 } = require('uuid');
 const getAllUser = (req, res) => {
     // req paramatere -> user id
