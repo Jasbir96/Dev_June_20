@@ -37,17 +37,22 @@ const deleteUser = (req, res) => {
         length: userDB.length
     })
 }
-const getUser = (req, res) => {
+const getUser = async (req, res) => {
     // req paramatere -> user id
     let cUid = req.params.uid;
-    let userArr = userDB.filter((user) => {
-        return user.uid == cUid;
-    });
-    console.log(req.params);
-    res.status(201).json({
-        status: "success",
-        user: userArr.length == 0 ? "no user" : userArr[0]
-    })
+    try {
+        let user = await userModel.getById(cUid);
+        res.status(201).json({
+            status: "success",
+            user: user
+        });
+    } catch (err) {
+        res.status(201).json({
+            status: "failure",
+            user: err.message
+        })
+    }
+
     // next()
 }
 const createUser = async (req, res) => {
@@ -67,9 +72,21 @@ const createUser = async (req, res) => {
         })
     }
 }
-
+const checkBody = function (req, res, next) {
+    console.log("I will run after express.json");
+    let keysArray = Object.keys(req.body);
+    if (keysArray.length == 0) {
+        res.status(200).json({
+            "status": "failure",
+            "message": "Body Could not be empty"
+        })
+    } else {
+        next();
+    }
+}
 module.exports.getAllUser = getAllUser;
 module.exports.updateUser = updateUser;
 module.exports.deleteUser = deleteUser;
 module.exports.getUser = getUser;
 module.exports.createUser = createUser;
+module.exports.checkBody = checkBody;

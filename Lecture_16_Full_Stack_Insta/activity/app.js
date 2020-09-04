@@ -16,18 +16,18 @@ app.use(function before(req, res, next) {
 // user defined middleware
 // it tracks json obj in http body and add it to req.body
 app.use(express.json());
-app.use(function checkBody(req, res, next) {
-    console.log("I will run after express.json");
-    let keysArray = Object.keys(req.body);
-    if (keysArray.length == 0) {
-        res.status(200).json({
-            "status": "failure",
-            "message": "Body Could not be empty"
-        })
-    } else {
-        next();
-    }
-})
+// app.use(function checkBody(req, res, next) {
+//     console.log("I will run after express.json");
+//     let keysArray = Object.keys(req.body);
+//     if (keysArray.length == 0) {
+//         res.status(200).json({
+//             "status": "failure",
+//             "message": "Body Could not be empty"
+//         })
+//     } else {
+//         next();
+//     }
+// })
 // get => some changing parameter 
 // getOne
 // npm i uuid
