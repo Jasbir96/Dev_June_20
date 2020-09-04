@@ -42,7 +42,6 @@ app.use(function checkBody(req, res, next) {
 // localhost:3000/api/v1/users/:uid
 app.use("/api/v1/user", userRouter);
 // app.use("/api/v1/post", postRouter);
-
 // 404 route 
 app.use("*", (req, res) => {
     res.status(404).json({
