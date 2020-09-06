@@ -10,20 +10,32 @@ const getAllUser = (req, res) => {
         userDB: userDB
     })
 }
-const updateUser = (req, res) => {
-    let user = getUserById(req.params.uid);
+const updateUser = async (req, res) => {
+    // let user = getUserById(req.params.uid);
+    let uid = req.params.uid;
     let toBeUpdatedObj = req.body;
-    // user , obj
-    // user.something
-    for (let key in toBeUpdatedObj) {
-        console.log(key);
-        user[key] = toBeUpdatedObj[key];
+    try {
+        let result = await userModel.update(uid, toBeUpdatedObj);
+        res.status(200).json({
+            status: "success",
+            "message": result
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            status: "failure",
+            "message": err.message,
+            
+        })
     }
-    fs.writeFileSync(path.join(__dirname, "/db/user.json"), JSON.stringify(userDB));
-    res.status(200).json({
-        status: "success",
-        user: user
-    })
+    // // user , obj
+    // // user.something
+    // for (let key in toBeUpdatedObj) {
+    //     console.log(key);
+    //     user[key] = toBeUpdatedObj[key];
+    // }
+    // fs.writeFileSync(path.join(__dirname, "/db/user.json"), JSON.stringify(userDB));
+
 
 }
 const deleteUser = (req, res) => {
