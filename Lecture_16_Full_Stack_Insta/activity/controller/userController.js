@@ -25,7 +25,7 @@ const updateUser = async (req, res) => {
         res.status(500).json({
             status: "failure",
             "message": err.message,
-            
+
         })
     }
     // // user , obj
@@ -38,16 +38,24 @@ const updateUser = async (req, res) => {
 
 
 }
-const deleteUser = (req, res) => {
+const deleteUser = async(req, res) => {
     let cid = req.params.uid;
-    console.log(userDB.length);
-    userDB = userDB.filter((user) => { return user.uid != cid; })
-    fs.writeFileSync(path.join(__dirname, "/db/user.json"), JSON.stringify(userDB));
-    res.status(200).json({
-        status: "success",
-        userDB,
-        length: userDB.length
-    })
+    try {
+        let result = await userModel.deleteById(cid);
+        console.log(result);
+        res.status(200).json({
+            status: "success",
+            result: result
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            status: "failure",
+            "message": err.message,
+
+        })
+    }
+
 }
 const getUser = async (req, res) => {
     // req paramatere -> user id
