@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS user(
     is_verified Boolean DEFAULT false,
     is_public Boolean DEFAULT true
 );
-
 CREATE TABLE IF NOT EXISTS user_follower
 (user_id VARCHAR(255)  NOT NULL ,
 follower_id VARCHAR(255) NOT NULL,

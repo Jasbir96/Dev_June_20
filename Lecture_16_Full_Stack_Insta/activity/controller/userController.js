@@ -118,7 +118,7 @@ const createRequest = async (req, res) => {
                 "message": "request accepted"
             })
         }
-         res.status(201).json({
+        res.status(201).json({
             status: "pending",
             "message": "request is send user will accept it"
         })
@@ -136,7 +136,7 @@ const createRequest = async (req, res) => {
 // get ALL followers
 const getAllFollowers = async (req, res) => {
     try {
-        let result = await userFollowerModel.getAllFollowers(req.body);
+        let result = await userFollowerModel.getAllFollowers(req.params.id);
         res.status(201).json({
             status: "success",
             "message": result

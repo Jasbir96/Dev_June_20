@@ -1,7 +1,6 @@
 const connection = require("./connection");
 const { v4: uuidv4 } = require('uuid');
 const util = require("util");
-
 const addPendingFollower = (obj) => {
     return new Promise(function (resolve, reject) {
         connection.query("INSERT into user_follower SET ?", obj, (err, result) => {

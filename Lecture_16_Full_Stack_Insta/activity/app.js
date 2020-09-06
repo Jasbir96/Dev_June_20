@@ -8,6 +8,7 @@ const app = express();
 // // for accepting data in req.body
 //  it will always run
 // user defined
+app.use(express.static("public"));
 app.use(function before(req, res, next) {
     console.log("I will run before express.json");
     console.log(req.body);
