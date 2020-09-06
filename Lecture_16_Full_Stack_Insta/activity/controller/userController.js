@@ -1,7 +1,6 @@
 const userDB = require("../model/user.json");
 const userModel = require("../model/userModel");
-
-
+const userFollowerModel = require("../model/user_followerModel");
 const getAllUser = (req, res) => {
     // req paramatere -> user id
     // console.log(req.params);
@@ -38,7 +37,7 @@ const updateUser = async (req, res) => {
 
 
 }
-const deleteUser = async(req, res) => {
+const deleteUser = async (req, res) => {
     let cid = req.params.uid;
     try {
         let result = await userModel.deleteById(cid);
@@ -104,9 +103,59 @@ const checkBody = function (req, res, next) {
         next();
     }
 }
+// ***********************************request*******************************
+// send Request 
+const createRequest = async (req, res) => {
+    try {
+        let uid = req.body.user_id;
+        let follower_id = req.body.follower_id;
+        await userFollowerModel.addPendingFollower(req.body);
+        let { is_public } = await userModel.getById(uid);
+        if (is_public == true) {
+            await userFollowerModel.acceptRequest(uid, follower_id);
+            return res.status(201).json({
+                status: "success",
+                "message": "request accepted"
+            })
+        }
+         res.status(201).json({
+            status: "pending",
+            "message": "request is send user will accept it"
+        })
+
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            status: "success",
+            "message": err.message
+        })
+    }
+}
+
+// get ALL followers
+const getAllFollowers = async (req, res) => {
+    try {
+        let result = await userFollowerModel.getAllFollowers(req.body);
+        res.status(201).json({
+            status: "success",
+            "message": result
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            status: "success",
+            "message": err.message
+        })
+    }
+
+}
+
 module.exports.getAllUser = getAllUser;
 module.exports.updateUser = updateUser;
 module.exports.deleteUser = deleteUser;
 module.exports.getUser = getUser;
 module.exports.createUser = createUser;
 module.exports.checkBody = checkBody;
+module.exports.createRequest = createRequest;
+module.exports.getAllFollowers = getAllFollowers;
