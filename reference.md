@@ -49,3 +49,17 @@
 #### Extensions
   * https://developer.chrome.com/extensions/getstarted
   * https://developer.chrome.com/extensions/tabs
+### Full Stack
+  * REST API : 
+    * video : https://www.youtube.com/watch?v=Q-BpqyOT3a8 
+  * https://restfulapi.net/rest-architectural-constraints
+  *  Request Methods: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+  * Res Status:https://www.restapitutorial.com/httpstatuscodes.html
+  * MVC: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
+  #### EXPRESS 
+    * https://expressjs.com/en/starter/basic-routing.html
+    *	https://expressjs.com/en/guide/routing.html
+    *	https://expressjs.com/en/guide/writing-middleware.html
+  #### React
+  * Best video for  getting started with react: https://www.youtube.com/watch?v=SAIdyBFHfVU
+  * https://www.youtube.com/watch?v=Tn6-PIqc4UM
