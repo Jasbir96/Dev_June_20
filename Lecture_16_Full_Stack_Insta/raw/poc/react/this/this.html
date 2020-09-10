@@ -20,7 +20,7 @@
                 console.log("Line no 20")
                 // console.log(this);
                 console.log(this);
-
+                // it takes this from outside 
               let  inner = () => {
                     console.log("Line no 24");
                     console.log(this);
@@ -33,7 +33,6 @@
         }
         // method call
         obj.sayHi();
-
         function fun() {
             //    window object
             console.log(this);
