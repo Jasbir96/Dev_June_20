@@ -8,12 +8,10 @@
     <!-- react logic -->
     <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
     <!-- platform specific code  -->
-
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
     <!-- convert JSX to JS -->
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 </head>
-
 <body>
     <!-- APP -->
     <div id="root"></div>
@@ -21,7 +19,6 @@
         // JSX
         // component
         // component name start from Capital letter 
-        // 
         let users = ["Sheldon", "Rajesh", 'Lenord', "Howard", "Stuart"
             , "Penny", "Amy", "bernadette"];
             // to pass data to some component use props
@@ -36,10 +33,10 @@
                     {users.map(function (user) {
                         return <Hello name={user} />
                     })}
+                    
                 </React.Fragment>
             )
         }
-
         // add your component to html page
         ReactDOM.render(<HelloParent />,
             document.getElementById("root"));

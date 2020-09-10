@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- this is current object  it is determind on runtime]> -->
+    <script>
+        // console.log(window);
+        "use strict";
+        // name = "steve";
+        let obj = {
+            name: "Jasbir",
+            sayHi: function () {
+                // this => calling obj
+                console.log("Line no 20")
+                // console.log(this);
+                console.log(this);
+
+              let  inner = () => {
+                    console.log("Line no 24");
+                    console.log(this);
+                }
+
+                inner();
+                //   let boundWithObj=  inner.bind(obj);
+                //   boundWithObj()
+            }
+        }
+        // method call
+        obj.sayHi();
+
+        function fun() {
+            //    window object
+            console.log(this);
+            // console.log(name);
+            // console.log(window.name);
+            // console.log(this.name);
+        }
+        fun();
+        // // fn call => this => window
+    </script>
+
+</body>
+
+</html>
