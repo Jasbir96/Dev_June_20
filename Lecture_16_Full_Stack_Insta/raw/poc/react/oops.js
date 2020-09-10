@@ -29,4 +29,5 @@ class ManualCar extends Car {
     }
 }
 let beat = new ManualCar(10, "beat", 170, "6L");
-beat.getDetails();
+// beat.getDetails();
+console.log(beat);

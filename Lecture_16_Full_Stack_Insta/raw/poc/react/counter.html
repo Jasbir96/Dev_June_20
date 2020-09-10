@@ -34,7 +34,7 @@
         class Counter extends React.Component {
             // 1. 
             constructor() {
-                super()
+                super();
                 this.state = {
                     count: 0
                 }
@@ -57,19 +57,29 @@
                         <p class="ml ml-4 lead">
                             {this.state.count}</p>
                         <button
-                            class="btn btn-primary" 
+                            class="btn btn-primary"
                             onClick={this.increment}>+</button>
                         <button
-                            class="btn btn-danger" 
+                            class="btn btn-danger"
                             onClick={this.decrement}>-</button>
 
                     </React.Fragment>
                 )
             }
-
         }
         // new COunter
-        ReactDOM.render(<Counter />,
+        function CounterParent() {
+            return (
+                <React.Fragment>
+                    <Counter></Counter>
+                    <Counter></Counter>
+                    <Counter></Counter>
+                    <Counter></Counter>
+                </React.Fragment>
+            )
+        }
+
+        ReactDOM.render(<CounterParent />,
             document.getElementById("root"));
     </script>
 </body>
