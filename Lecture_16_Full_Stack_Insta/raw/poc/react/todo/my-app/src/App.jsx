@@ -24,7 +24,6 @@ class App extends Component {
         let { tasks } = this.state;
         return (
             <React.Fragment>
-
                 {/* tasklist
                 <div className="container">
                     {tasks.map((task) => {
