@@ -1,12 +1,12 @@
 import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import UserViewLeft from './component/userComponent/UserViewLeft';
+import UserView from './component/userComponent/UserView';
 
 function App() {
   return (
     <React.Fragment>
-      <UserViewLeft></UserViewLeft>
+      <UserView></UserView>
     </React.Fragment>
   );
 }

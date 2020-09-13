@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+.user-view{
+  width: 40vw;
+  background: lightgray;
+  display: flex;
+  
+}
+.profile-parent{
+  border: 2px solid red;
+  width: 49%;
+  background: white;
+}
+.profile{
+  
+  border: 2px solid red;
+}
