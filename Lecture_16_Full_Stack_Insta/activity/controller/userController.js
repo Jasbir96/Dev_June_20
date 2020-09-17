@@ -1,6 +1,7 @@
 const userDB = require("../model/user.json");
 const userModel = require("../model/userModel");
 const userFollowerModel = require("../model/user_followerModel");
+const userFollowingModel = require("../model/user_followingModel");
 const getAllUser = (req, res) => {
     // req paramatere -> user id
     // console.log(req.params);
@@ -113,6 +114,7 @@ const createRequest = async (req, res) => {
         let { is_public } = await userModel.getById(uid);
         if (is_public == true) {
             await userFollowerModel.acceptRequest(uid, follower_id);
+            await userFollowingModel.addFollowing({ u_id: follower_id, following_id: uid });
             return res.status(201).json({
                 status: "success",
                 "message": "request accepted"
@@ -132,7 +134,24 @@ const createRequest = async (req, res) => {
         })
     }
 }
-
+const acceptRequestHandler = async (req,res) => {
+    try {
+        let uid = req.body.user_id;
+        let follower_id = req.body.follower_id;
+        await userFollowerModel.acceptRequest(uid, follower_id);
+        await userFollowingModel.addFollowing({ u_id: follower_id, following_id: uid });
+        return res.status(201).json({
+            status: "success",
+            "message": "request accepted"
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            status: "success",
+            "message": err.message
+        })
+    }
+}
 // get ALL followers
 const getAllFollowers = async (req, res) => {
     try {
@@ -166,7 +185,6 @@ const getCountOfAllFollowers = async (req, res) => {
     }
 
 }
-
 module.exports.getAllUser = getAllUser;
 module.exports.updateUser = updateUser;
 module.exports.deleteUser = deleteUser;
@@ -176,3 +194,4 @@ module.exports.checkBody = checkBody;
 module.exports.createRequest = createRequest;
 module.exports.getAllFollowers = getAllFollowers;
 module.exports.getCountOfAllFollowers = getCountOfAllFollowers;
+module.exports.acceptRequestHandler = acceptRequestHandler;

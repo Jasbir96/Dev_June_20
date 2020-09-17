@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS user_follower
 (user_id VARCHAR(255)  NOT NULL ,
 follower_id VARCHAR(255) NOT NULL,
 is_accepted Boolean DEFAULT false,
+PRIMARY KEY (user_id, follower_id),
 INDEX (user_id)
 );
 CREATE TABLE IF NOT EXISTS POST (
@@ -21,4 +22,11 @@ CREATE TABLE IF NOT EXISTS POST (
     descp VARCHAR(255),
     p_img_url VARCHAR(255) NOT NULL,
     INDEX (author_id) 
+)
+
+CREATE TABLE IF NOT EXISTS user_following (
+   u_id VARCHAR(255) NOT NULL,
+   following_id  VARCHAR(255) NOT NULL ,
+   PRIMARY KEY (u_id, following_id),
+   INDEX(u_id)
 )
