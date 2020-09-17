@@ -1,25 +1,26 @@
 const connection = require("./connection");
 const { v4: uuidv4 } = require('uuid');
 const util = require("util");
-
+const factory = require("./factoryModel");
 // query
 // create
-let create = (userObj) => {
-    // insert 
-    userObj.id = uuidv4();
-    // create user 
-    return new Promise(function (resolve, reject) {
-        connection.query("INSERT INTO user SET ?", userObj, function (err, res) {
-            if (err) {
-                reject(err)
-                return;
-            } else {
-                resolve(res);
-            }
-        })
-    })
-}
+// let create = (userObj) => {
+//     // insert 
+//     userObj.id = uuidv4();
+//     // create user 
+//     return new Promise(function (resolve, reject) {
+//         connection.query(`INSERT INTO ${entity} SET ?`, userObj, function (err, res) {
+//             if (err) {
+//                 reject(err)
+//                 return;
+//             } else {
+//                 resolve(res);
+//             }
+//         })
+//     })
+// }
 
+let create = factory.createFactory("user");
 // getby uid 
 let getById = (uid) => {
     return new Promise(function (resolve, reject) {
@@ -58,19 +59,19 @@ let update = (uid, toUpdateObject) => {
             });
     })
 }
-let deleteById =  (uid) => {
-console.log(uid);
-return new Promise(function (resolve, reject) {
-    connection.query(`DELETE from user WHERE uid="${uid}"`,
-        function (err, result) {
-            if (err) {
-                reject(err)
-            } else {
-                resolve(result);
-            }
-        });
-})
-     
+let deleteById = (uid) => {
+    console.log(uid);
+    return new Promise(function (resolve, reject) {
+        connection.query(`DELETE from user WHERE uid="${uid}"`,
+            function (err, result) {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(result);
+                }
+            });
+    })
+
 }
 // delete
 // send request

@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 // const { response } = require("express");
 const userRouter = require("./router/userRoutes");
+const postRouter = require("./router/postRoutes");
 const app = express();
 // // for accepting data in req.body
 //  it will always run
@@ -41,7 +42,7 @@ app.use(express.json());
 // 
 // localhost:3000/api/v1/users/:uid
 app.use("/api/v1/user", userRouter);
-// app.use("/api/v1/post", postRouter);
+app.use("/api/v1/post", postRouter);
 // 404 route 
 app.use("*", (req, res) => {
     res.status(404).json({
