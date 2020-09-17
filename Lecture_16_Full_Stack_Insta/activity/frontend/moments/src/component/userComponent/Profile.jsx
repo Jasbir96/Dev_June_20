@@ -9,16 +9,15 @@ class Profile extends Component {
         name: "...",
         noOfpost: "Empty",
         followersCount: "Empty",
-        followingCount: "Empty"
+        followingCount: "Empty",
     }
     //  ui pe print 
     componentDidMount() {
         // getUser
-        axios.get("/api/v1/user/1c10a5c8-6627-46d5-a6c9-63886b343310")
+        axios.get("/api/v1/user/d811c778-970d-4461-bf77-b2bce185d74d")
             .then((res) => {
-                let { handle, name } = res.data.user
-
-                this.setState({ handle: handle, name });
+                let { handle, name, pimg_url } = res.data.user;
+                this.setState({ handle: handle, name, src:pimg_url });
             }).then(() => {
                 return axios.get("/api/v1/user/request/count/1c10a5c8-6627-46d5-a6c9-63886b343310");
             }).then((res) => {
@@ -28,6 +27,7 @@ class Profile extends Component {
             })
             .catch(function (err) { console.log(err) });
     }
+
     render() {
         let { src, handle, name, noOfpost, followersCount, followingCount } = this.state;
         let { updatecurrentMenu } = this.props;
@@ -51,7 +51,7 @@ class Profile extends Component {
                         </div>
                         <div className="stat ">
                             <div className="following">{followingCount}</div>
-                            <div >Following</div>
+                            <div>Following</div>
                         </div>
                     </div>
                 </div>

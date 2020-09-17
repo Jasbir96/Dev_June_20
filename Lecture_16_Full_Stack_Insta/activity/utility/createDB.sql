@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS user(
-    uid  VARCHAR(255) PRIMARY KEY ,
+    id  VARCHAR(255) PRIMARY KEY ,
     name VARCHAR(255) NOT NULL,
     phone  BIGINT NOT NULL UNIQUE,
     email VARCHAR(100) UNIQUE,
@@ -14,3 +14,11 @@ follower_id VARCHAR(255) NOT NULL,
 is_accepted Boolean DEFAULT false,
 INDEX (user_id)
 );
+CREATE TABLE IF NOT EXISTS POST (
+    id VARCHAR(255) PRIMARY KEY,
+    created_at DATETIME NOT NULL,
+    author_id VARCHAR(80) NOT NULL,
+    descp VARCHAR(255),
+    p_img_url VARCHAR(255) NOT NULL,
+    INDEX (author_id) 
+)

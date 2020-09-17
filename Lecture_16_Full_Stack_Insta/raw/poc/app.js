@@ -96,6 +96,7 @@ const createUser = (req, res) => {
     //     user: req.body
     // })
 }
+
 app.route("/api/v1/user").get(getAllUser).post(createUser);
 app.route("/api/v1/user/:uid").get(getUser).patch(updateUser).delete(deleteUser);
 // ***************************POST*******************************

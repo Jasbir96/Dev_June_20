@@ -6,7 +6,7 @@ const util = require("util");
 // create
 let create = (userObj) => {
     // insert 
-    userObj.uid = uuidv4();
+    userObj.id = uuidv4();
     // create user 
     return new Promise(function (resolve, reject) {
         connection.query("INSERT INTO user SET ?", userObj, function (err, res) {
