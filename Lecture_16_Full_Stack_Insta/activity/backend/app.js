@@ -15,6 +15,7 @@ app.use(function before(req, res, next) {
     console.log(req.body);
     next();
 })
+
 // user defined middleware
 // it tracks json obj in http body and add it to req.body
 app.use(express.json());

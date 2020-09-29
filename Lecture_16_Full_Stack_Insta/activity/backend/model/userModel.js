@@ -39,19 +39,20 @@ let getById = (uid) => {
 let update = (uid, toUpdateObject) => {
     // console.log(uid);
     let updateString = '';
-    console.log(toUpdateObject);
+    // console.log(toUpdateObject);
     for (let attr in toUpdateObject) {
         console.log(toUpdateObject[attr]);
         updateString += `${attr}="${toUpdateObject[attr]}", `
     }
-    console.log(updateString)
     updateString = updateString.substring(0,
         updateString.length - 2);
+        
+        console.log("Line number"+updateString)
     return new Promise(function (resolve, reject) {
-        connection.query(`UPDATE user SET 
-        ${updateString} WHERE id="${uid}"`,
+        connection.query(`UPDATE user SET ${updateString} WHERE id="${uid}"`,
             function (err, result) {
                 if (err) {
+                    // console.log(err);
                     reject(err)
                 } else {
                     resolve(result);

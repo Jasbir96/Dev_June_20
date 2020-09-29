@@ -1,4 +1,4 @@
-const userDB = require("../model/user.json");
+// const userDB = require("../model/user.json");
 const userModel = require("../model/userModel");
 const userFollowerModel = require("../model/user_followerModel");
 const userFollowingModel = require("../model/user_followingModel");
@@ -14,6 +14,15 @@ const updateUser = async (req, res) => {
     // let user = getUserById(req.params.uid);
     let uid = req.params.uid;
     let toBeUpdatedObj = req.body;
+    // img upload server=> data
+    // file
+    console.log(req.file);
+    // text
+    console.log(req.body);
+    if (req.file) {
+        toBeUpdatedObj.pimg_url = "user/" + req.file.filename;
+    }
+
     try {
         let result = await userModel.update(uid, toBeUpdatedObj);
         res.status(200).json({
@@ -77,6 +86,7 @@ const getUser = async (req, res) => {
 }
 const createUser = async (req, res) => {
     let user = req.body;
+
     // console.log(user);
     try {
         let nDBUser = await userModel.create(user);
@@ -134,7 +144,7 @@ const createRequest = async (req, res) => {
         })
     }
 }
-const acceptRequestHandler = async (req,res) => {
+const acceptRequestHandler = async (req, res) => {
     try {
         let uid = req.body.user_id;
         let follower_id = req.body.follower_id;
