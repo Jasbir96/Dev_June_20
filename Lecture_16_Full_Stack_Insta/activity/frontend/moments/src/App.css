@@ -1,7 +1,9 @@
 .App {
   text-align: center;
 }
-
+*{
+  box-sizing: border-box;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -51,4 +53,30 @@
 .profile{
   
   border: 2px solid red;
+}
+.profile-details{
+  text-align: center;
+}
+.profile-img{
+  height:5remx;
+  width:5rem;
+  object-fit: contain;
+}
+.app{
+  display: flex;
+}
+.post-view{
+width: 70vw;;
+}
+.header{
+  height: 20vh;
+  border:1px solid gray;
+  width:100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.fa.fa-plus{
+  font-size:2rem;
 }

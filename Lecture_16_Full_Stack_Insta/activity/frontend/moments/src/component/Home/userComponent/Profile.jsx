@@ -1,6 +1,7 @@
 // imrc
 import React, { Component } from 'react';
 import axios from "axios";
+
 // cc
 class Profile extends Component {
     state = {
@@ -36,7 +37,7 @@ class Profile extends Component {
             <div className="profile-parent">
                 <div className="profile">
                     <div className="profile-details">
-                        <img src={src} alt="profile-img" />
+                        <img src={src} alt="profile-img" className="profile-img"/>
                         <p>{name}</p>
                         <p>{handle}</p>
                     </div>

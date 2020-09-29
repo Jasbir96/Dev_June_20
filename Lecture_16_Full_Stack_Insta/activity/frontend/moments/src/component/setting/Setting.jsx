@@ -1,4 +1,4 @@
-import "./settings.css";
+
 import React, { Component } from 'react';
 import axios from "axios";
 
@@ -39,7 +39,7 @@ class Setting extends Component {
         let img = this.fileRef.current.files[0];
         formData.append("photo", img);
         formData.append("name", this.state.name);
-        formData.append("handle", this.state.handleUpdate);
+        formData.append("handle", this.state.handle);
         let { data } = await axios
             .patch
             ("/api/v1/user/038b49c0-1169-4bbf-81e7-18180a7789f9", 

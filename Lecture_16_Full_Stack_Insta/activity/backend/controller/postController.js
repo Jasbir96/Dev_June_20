@@ -69,7 +69,10 @@ const createPost = async (req, res) => {
         const date = new Date();
         post.created_at = date.toISOString()
             .slice(0, 19).replace('T', ' ');
-
+        if (req.file) {
+            let img = "post/" + req.file.filename;
+            post.p_img_url = img
+        }
         let nDBPost = await postModel.create(post);
         // res
         res.status(201).json({
@@ -77,6 +80,7 @@ const createPost = async (req, res) => {
             user: nDBPost
         })
     } catch (err) {
+        console.log(err);
         res.status(500).json({
             status: "success",
             "message": err.message
