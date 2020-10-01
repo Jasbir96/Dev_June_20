@@ -9,11 +9,12 @@ import LoginPage from "./component/LandingPage";
 import PageNotFound from "./component/PageNotFound";
 
 
+// /home/create
 function App() {
   return (
     <React.Fragment>
       <Switch>
-        <Route path="/home" exact>
+        <Route path="/home"  >
           <Home></Home>
         </Route>
         <Route path="/setting" exact>
@@ -23,9 +24,11 @@ function App() {
           <LoginPage></LoginPage>
         </Route>
         <Redirect from="/login" to="/"></Redirect>
+        
         <Route >
           <PageNotFound></PageNotFound>
         </Route>
+
       </Switch>
 
 

@@ -80,3 +80,57 @@ width: 70vw;;
 .fa.fa-plus{
   font-size:2rem;
 }
+
+.user-view{
+  height: 100vh;
+}
+.main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+.post{
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  height:40vh;
+  width:80%;
+  border:1px solid;
+}
+.user___image--container{
+height: 20px;
+width:20px;
+border: 1px solid;
+margin-bottom:1.5rem;
+}
+
+.user-data-container{
+  display: flex;
+  
+}
+
+.post__img-container{
+height: 60%;
+width:80%;
+margin:0 auto;
+border:1px solid greenyellow;
+}
+
+.post__img{
+  height:100%;
+  width:100%;
+  /* object-fit: contain; */
+}
+.user__image{
+  height: 100%;
+  width:100%
+}
+.createpost{
+  position: absolute;
+  z-index: 10;
+  left:40vw;
+}
+/* inheritance height / width  */
+/* default height /width => aspect ratio */
+/* css you need to go to image tag 
+to change it's height and width */

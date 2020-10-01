@@ -2,6 +2,8 @@
 const userModel = require("../model/userModel");
 const userFollowerModel = require("../model/user_followerModel");
 const userFollowingModel = require("../model/user_followingModel");
+const postModel = require("../model/postModel");
+
 const getAllUser = (req, res) => {
     // req paramatere -> user id
     // console.log(req.params);
@@ -195,6 +197,64 @@ const getCountOfAllFollowers = async (req, res) => {
     }
 
 }
+// get All post of a user
+const getMyPost = async (req, res) => {
+    let id = req.params.id;
+
+    try {
+        let allPost = await postModel
+            .getAllPostOfAUser(id);
+        res.status(200).json({
+            status: "success",
+            "message": allPost
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            status: "success",
+            "message": err.message
+        })
+    }
+}
+const getMyFeed = async (req, res) => {
+    let id = req.params.id;
+    try {
+        // get all friends that you follow
+        let friendsId = await userFollowingModel.getFollowing(id);
+
+        // get allPost 
+        let feed = [];
+
+        friendsId = friendsId.map((friendsId) => {
+            return friendsId.following_id;
+        })
+        // console.log(friendsId)
+        // for (let friendId in friendsId) {
+        //     console.log(friendId);
+        //     let fAllPost = await postModel
+        //         .getAllPostOfAUser(friendsId[friendsId]);
+        //         // console.log(fAllPost)
+        //     feed = [...feed, ...fAllPost];
+        // }
+        for (let i = 0; i < friendsId.length; i++) {
+                let fAllPost = await postModel
+                    .getAllPostOfAUser(friendsId[i]);
+                    // console.log(fAllPost)
+                feed = [...feed, ...fAllPost];
+        }
+        res.status(200).json({
+            status: "success",
+            "message": feed
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            status: "success",
+            "message": err.message
+        })
+    }
+}
+
 module.exports.getAllUser = getAllUser;
 module.exports.updateUser = updateUser;
 module.exports.deleteUser = deleteUser;
@@ -205,3 +265,5 @@ module.exports.createRequest = createRequest;
 module.exports.getAllFollowers = getAllFollowers;
 module.exports.getCountOfAllFollowers = getCountOfAllFollowers;
 module.exports.acceptRequestHandler = acceptRequestHandler;
+module.exports.getMyPost = getMyPost;
+module.exports.getMyFeed = getMyFeed;

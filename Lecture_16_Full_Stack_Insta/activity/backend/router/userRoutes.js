@@ -3,7 +3,7 @@ const userRouter = new express.Router();
 const multer = require("multer");
 // /:uid=> get 
 const { getAllUser, createUser, getUser, updateUser, deleteUser,
-    checkBody, createRequest, getAllFollowers, getCountOfAllFollowers, acceptRequestHandler } = require("../controller/userController");
+    checkBody, createRequest, getAllFollowers, getCountOfAllFollowers, acceptRequestHandler, getMyPost, getMyFeed } = require("../controller/userController");
 
 
 const filter = (req, file, cb) => {
@@ -28,6 +28,8 @@ const upload = multer({
     storage: multerStorage
 });
 userRouter.route("/").get(getAllUser).post(checkBody, createUser);
+userRouter.route("/mypost/:id").get(getMyPost);
+userRouter.route("/feed/:id").get(getMyFeed);
 userRouter.route("/request").post(createRequest).patch(acceptRequestHandler)
 userRouter.route("/request/:id").get(getAllFollowers)
 userRouter.route("/request/count/:id").get(getCountOfAllFollowers);

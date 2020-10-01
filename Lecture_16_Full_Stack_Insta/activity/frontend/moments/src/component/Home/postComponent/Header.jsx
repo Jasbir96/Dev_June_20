@@ -2,19 +2,26 @@ import React, { Component } from 'react';
 import "font-awesome/css/font-awesome.css";
 import { Link } from "react-router-dom";
 class Header extends Component {
-    state = {}
+    state = {
+        
+    }
+
+
     render() {
+        let { MainState } = this.state;
         return (
             <div className="header">
                 {/* feed /POST */}
-                <div className="feed">Feed</div>
+                <div className="feed">
+                    {MainState == "feed" ? <div>Post</div> : <div>Feed</div>}
+                </div>
                 {/* search */}
                 <div className="search">search</div>
                 {/* create post */}
-
-                <i className="fa fa-plus" aria-hidden="true">
-                    <Link to="/home/create"></Link>
-                </i>
+                <Link to="/home/create">
+                    <i className="fa fa-plus" aria-hidden="true">
+                    </i>
+                </Link>
             </div>
         );
     }

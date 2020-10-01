@@ -4,15 +4,20 @@ import Main from "./Main";
 import CreatPost from "./CreatePost";
 import { Route } from "react-router-dom";
 class PostView extends Component {
-    state = {}
+    state = {
+        MainState: "feed"
+    }
     render() {
         return (
             <div className="post-view">
-                <Header>
+                <Header changeMain >
                 </Header>
-                <Main></Main>
+                <Main>
 
-                <CreatPost></CreatPost>
+                </Main>
+                <Route path="/home/create" exact>
+                    <CreatPost></CreatPost>
+                </Route>
             </div>
         );
     }
