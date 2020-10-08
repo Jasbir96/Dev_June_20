@@ -6,15 +6,12 @@ const cookie = require("cookie-session");
 // ****DataBase connection**********************
 // to handle cookies in express
 const passport = require("passport");
-
 app.use(cookie({
     maxAge: 60 * 24 * 60 * 1000,
     keys: ["jdsfbdjhsfbd"]
 }))
-
 app.use(passport.initialize());
 app.use(passport.session());
-
 const DB = mysql.createConnection({
     host: 'localhost',
     user: "root",
@@ -23,7 +20,6 @@ const DB = mysql.createConnection({
 });
 DB.connect();
 // *********************************************
-
 app.use(express.static("public"));
 // passport .serialize
 // passport .deserialize
@@ -94,14 +90,15 @@ app.get('/auth/callback', passport.authenticate("google"), function (req, res) {
     console.log(req.user);
     console.log("data recieved from server")
     console.log("user authenticated");
-    res.send(
-        {
-            status: "success",
-            user: req.user
-        }
-    );
+    // res.send(
+    //     {
+    //         status: "success",
+    //         user: req.user
+    //     }
+    // );
+    // full path
+    res.redirect("http://localhost:3000");
 });
-
 function authChecker(req, res, next) {
     if (req.user) {
         console.log("let him go");
@@ -113,19 +110,26 @@ function authChecker(req, res, next) {
 app.get("/profile", authChecker, function (req, res) {
 
     res.send(`<p> Accessed profile Page</p>${JSON.stringify(req.user)}</p>`)
-
+})
+app.get("/confirmLogin", function (req, res) {
+    if (req.user) {
+        res.json({
+            status: true
+        })
+    } else {
+        res.json({
+            status: false
+        })
+    }
 })
 app.listen(4000, console.log("Server is running at port 4000"));
-
-
-
 // user find => exist => login
 // signup => send to register page
 // data access
 // done(null, user);
 // from client 
 
-
+// ALTER TABLE user ADD gmail_id VARCHAR(200)
 
 
 
