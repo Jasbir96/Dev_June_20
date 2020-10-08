@@ -101,6 +101,20 @@ app.get('/auth/callback', passport.authenticate("google"), function (req, res) {
         }
     );
 });
+
+function authChecker(req, res, next) {
+    if (req.user) {
+        console.log("let him go");
+        next();
+    } else {
+        res.redirect("/auth/google");
+    }
+}
+app.get("/profile", authChecker, function (req, res) {
+
+    res.send(`<p> Accessed profile Page</p>${JSON.stringify(req.user)}</p>`)
+
+})
 app.listen(4000, console.log("Server is running at port 4000"));
 
 
