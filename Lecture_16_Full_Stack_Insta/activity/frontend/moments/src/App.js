@@ -14,7 +14,7 @@ function App() {
   return (
     <React.Fragment>
       <Switch>
-        <Route path="/home"  >
+        <Route path="/home">
           <Home></Home>
         </Route>
         <Route path="/setting" exact>
